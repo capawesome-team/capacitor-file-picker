@@ -3,10 +3,10 @@ package dev.robingenz.capacitorjs.plugins.filepicker;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
-
 import com.getcapacitor.Bridge;
 
 public class FilePicker {
+
     private Bridge bridge;
 
     FilePicker(Bridge bridge) {
@@ -20,7 +20,7 @@ public class FilePicker {
 
         String path = null;
         Cursor cursor = bridge.getActivity().getContentResolver().query(uri, null, null, null, null);
-        if(cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
             path = cursor.getString(columnIndex);

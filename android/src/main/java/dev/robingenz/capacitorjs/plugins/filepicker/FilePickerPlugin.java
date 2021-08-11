@@ -3,9 +3,7 @@ package dev.robingenz.capacitorjs.plugins.filepicker;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-
 import androidx.activity.result.ActivityResult;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -24,7 +22,7 @@ public class FilePickerPlugin extends Plugin {
         implementation = new FilePicker(this.getBridge());
     }
 
-    @PluginMethod()
+    @PluginMethod
     public void pickFile(PluginCall call) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
