@@ -1,7 +1,7 @@
 export interface FilePickerPlugin {
-  pickFile(): Promise<OpenResult>;
+  pickFile(): Promise<PickFileResult>;
 }
 
-export interface OpenResult {
+export interface PickFileResult {
   uri: string;
 }
