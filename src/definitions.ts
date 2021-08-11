@@ -1,3 +1,7 @@
 export interface FilePickerPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  pickFile(): Promise<PickFileResult>;
+}
+
+export interface PickFileResult {
+  uri: string;
 }
