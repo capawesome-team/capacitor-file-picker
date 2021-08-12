@@ -2,8 +2,11 @@ package dev.robingenz.capacitorjs.plugins.filepicker;
 
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import com.getcapacitor.Bridge;
+
+import java.io.File;
 
 public class FilePicker {
 
@@ -18,18 +21,24 @@ public class FilePicker {
             return "";
         }
 
-        String path = null;
-        Cursor cursor = bridge.getActivity().getContentResolver().query(uri, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-            path = cursor.getString(columnIndex);
-            cursor.close();
-        }
-        if (path == null || path.isEmpty()) {
-            path = uri.getPath();
+        String filePath = uri.toString();
+        return filePath;
+    }
+
+    public String getDisplayNameFromUri(Uri uri) {
+        if (uri == null) {
+            return "";
         }
 
-        return path;
+        String fileName = "";
+        String[] projection = { OpenableColumns.DISPLAY_NAME };
+        Cursor cursor = bridge.getActivity().getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIdx = cursor.getColumnIndex(projection[0]);
+            fileName = cursor.getString(columnIdx);
+            cursor.close();
+        }
+        return fileName;
     }
 }

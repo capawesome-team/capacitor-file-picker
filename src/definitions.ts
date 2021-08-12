@@ -3,5 +3,6 @@ export interface FilePickerPlugin {
 }
 
 export interface PickFileResult {
-  uri: string;
+  filePath: string;
+  fileName: string;
 }

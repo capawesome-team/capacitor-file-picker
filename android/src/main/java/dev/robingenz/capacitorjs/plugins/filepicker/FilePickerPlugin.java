@@ -44,9 +44,11 @@ public class FilePickerPlugin extends Plugin {
         switch (resultCode) {
             case Activity.RESULT_OK:
                 Uri uri = data.getData();
-                String path = implementation.getPathFromUri(uri);
+                String filePath = implementation.getPathFromUri(uri);
+                String fileName = implementation.getDisplayNameFromUri(uri);
                 JSObject callResult = new JSObject();
-                callResult.put("uri", path);
+                callResult.put("filePath", filePath);
+                callResult.put("fileName", fileName);
                 call.resolve(callResult);
                 break;
             case Activity.RESULT_CANCELED:
