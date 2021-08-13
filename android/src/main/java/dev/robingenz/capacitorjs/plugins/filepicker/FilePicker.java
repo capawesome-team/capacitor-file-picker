@@ -6,9 +6,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.util.Log;
-
 import com.getcapacitor.Bridge;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -89,7 +87,7 @@ public class FilePicker {
     /**
      * Source: https://stackoverflow.com/a/17861016/16289814
      */
-    private static byte[] getBytesFromInputStream (InputStream is) throws IOException {
+    private static byte[] getBytesFromInputStream(InputStream is) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         byte[] buffer = new byte[0xFFFF];
         for (int len = is.read(buffer); len != -1; len = is.read(buffer)) {
