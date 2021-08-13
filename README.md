@@ -63,6 +63,8 @@ const pickFile = async () => {
 pickFile() => Promise<PickFileResult>
 ```
 
+Open the file picker that allows the user to select a file.
+
 **Returns:** <code>Promise&lt;<a href="#pickfileresult">PickFileResult</a>&gt;</code>
 
 --------------------
@@ -73,9 +75,13 @@ pickFile() => Promise<PickFileResult>
 
 #### PickFileResult
 
-| Prop      | Type                |
-| --------- | ------------------- |
-| **`uri`** | <code>string</code> |
+| Prop           | Type                | Description                                                         |
+| -------------- | ------------------- | ------------------------------------------------------------------- |
+| **`path`**     | <code>string</code> | The path of the file.                                               |
+| **`name`**     | <code>string</code> | The name of the file.                                               |
+| **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. |
+| **`mimeType`** | <code>string</code> | The mime type of the file.                                          |
+| **`size`**     | <code>number</code> | The size of the file.                                               |
 
 </docgen-api>
 
