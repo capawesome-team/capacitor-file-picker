@@ -70,6 +70,22 @@ public class FilePicker {
         return bridge.getContext().getContentResolver().getType(uri);
     }
 
+    public long getSizeFromUri(Uri uri) {
+        if (uri == null) {
+            return 0;
+        }
+        long size = 0;
+        String[] projection = { OpenableColumns.SIZE };
+        Cursor cursor = bridge.getContext().getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIdx = cursor.getColumnIndex(projection[0]);
+            size = cursor.getLong(columnIdx);
+            cursor.close();
+        }
+        return size;
+    }
+
     /**
      * Source: https://stackoverflow.com/a/17861016/16289814
      */

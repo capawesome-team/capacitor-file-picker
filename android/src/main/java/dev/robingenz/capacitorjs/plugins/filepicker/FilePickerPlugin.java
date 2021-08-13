@@ -27,7 +27,6 @@ public class FilePickerPlugin extends Plugin {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
 
         intent = Intent.createChooser(intent, "Choose a file");
 
@@ -49,6 +48,7 @@ public class FilePickerPlugin extends Plugin {
                 callResult.put("name", implementation.getDisplayNameFromUri(uri));
                 callResult.put("data", implementation.getBase64DataFromUri(uri));
                 callResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
+                callResult.put("size", implementation.getSizeFromUri(uri));
                 call.resolve(callResult);
                 break;
             case Activity.RESULT_CANCELED:
