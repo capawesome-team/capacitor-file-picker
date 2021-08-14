@@ -8,9 +8,9 @@ import Capacitor
 @objc(FilePickerPlugin)
 public class FilePickerPlugin: CAPPlugin {
     public let errorPickFileCanceled = "pickFile canceled."
-    private var implementation: FilePicker?;
+    private var implementation: FilePicker?
     private var savedCall: CAPPluginCall?
-    
+
     override public func load() {
         self.implementation = FilePicker(self)
     }
@@ -19,7 +19,7 @@ public class FilePickerPlugin: CAPPlugin {
         savedCall = call
         implementation?.openDocumentPicker()
     }
-    
+
     func handleDocumentPickerResult(url: URL?) {
         guard let savedCall = savedCall else {
             return
