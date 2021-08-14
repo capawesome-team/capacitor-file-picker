@@ -46,7 +46,7 @@ public class FilePickerPlugin extends Plugin {
                 JSObject callResult = new JSObject();
                 callResult.put("path", implementation.getPathFromUri(uri));
                 callResult.put("name", implementation.getDisplayNameFromUri(uri));
-                callResult.put("data", implementation.getBase64DataFromUri(uri));
+                callResult.put("data", implementation.getDataFromUri(uri));
                 callResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
                 callResult.put("size", implementation.getSizeFromUri(uri));
                 call.resolve(callResult);

@@ -45,7 +45,7 @@ public class FilePicker {
         return displayName;
     }
 
-    public String getBase64DataFromUri(Uri uri) {
+    public String getDataFromUri(Uri uri) {
         if (uri == null) {
             return "";
         }
