@@ -41,7 +41,6 @@ import { FilePicker } from '@robingenz/capacitor-file-picker';
 
 const pickFile = async () => {
   const result = await FilePicker.pickFile();
-  return result.uri;
 };
 ```
 
