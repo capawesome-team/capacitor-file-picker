@@ -65,6 +65,8 @@ pickFile() => Promise<PickFileResult>
 
 Open the file picker that allows the user to select a file.
 
+Only available on Android and iOS.
+
 **Returns:** <code>Promise&lt;<a href="#pickfileresult">PickFileResult</a>&gt;</code>
 
 --------------------
