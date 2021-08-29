@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.1...v0.1.2) (2021-08-29)
+
+
+### Features
+
+* implement `types` option ([#10](https://github.com/robingenz/capacitor-file-picker/issues/10)) ([176dced](https://github.com/robingenz/capacitor-file-picker/commit/176dcedb00e6008da4d6ac357b1c216194bc9217))
+
+
+### Bug Fixes
+
+* **ios:** document picker swipe down not handled ([#11](https://github.com/robingenz/capacitor-file-picker/issues/11)) ([ed13fee](https://github.com/robingenz/capacitor-file-picker/commit/ed13feeae0590d75c76e0e0ec979ea297733cfcf))
+
 ### [0.1.1](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.0...v0.1.1) (2021-08-29)
 
 
