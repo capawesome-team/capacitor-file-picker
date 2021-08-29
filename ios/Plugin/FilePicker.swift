@@ -16,6 +16,7 @@ import MobileCoreServices
             let documentPicker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .import)
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
+            documentPicker.modalPresentationStyle = .fullScreen
             self.plugin?.bridge?.viewController?.present(documentPicker, animated: true, completion: nil)
         }
     }
