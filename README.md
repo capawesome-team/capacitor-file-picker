@@ -52,7 +52,7 @@ const pickFile = async () => {
 
 <docgen-index>
 
-* [`pickFile()`](#pickfile)
+* [`pickFile(...)`](#pickfile)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -60,13 +60,17 @@ const pickFile = async () => {
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### pickFile()
+### pickFile(...)
 
 ```typescript
-pickFile() => Promise<PickFileResult>
+pickFile(options?: PickFileOptions | undefined) => Promise<PickFileResult>
 ```
 
 Open the file picker that allows the user to select a file.
+
+| Param         | Type                                                        |
+| ------------- | ----------------------------------------------------------- |
+| **`options`** | <code><a href="#pickfileoptions">PickFileOptions</a></code> |
 
 **Returns:** <code>Promise&lt;<a href="#pickfileresult">PickFileResult</a>&gt;</code>
 
@@ -85,6 +89,13 @@ Open the file picker that allows the user to select a file.
 | **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. |
 | **`mimeType`** | <code>string</code> | The mime type of the file.                                          |
 | **`size`**     | <code>number</code> | The size of the file.                                               |
+
+
+#### PickFileOptions
+
+| Prop        | Type                  | Description                                                                                                                                                         |
+| ----------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`types`** | <code>string[]</code> | Array of valid media types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. |
 
 </docgen-api>
 
