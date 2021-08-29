@@ -29,7 +29,7 @@ public class FilePicker {
         return uri.toString();
     }
 
-    public String getDisplayNameFromUri(Uri uri) {
+    public String getNameFromUri(Uri uri) {
         if (uri == null) {
             return "";
         }

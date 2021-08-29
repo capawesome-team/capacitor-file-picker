@@ -82,7 +82,7 @@ Only available on Android and iOS.
 
 | Prop           | Type                | Description                                                         |
 | -------------- | ------------------- | ------------------------------------------------------------------- |
-| **`path`**     | <code>string</code> | The path of the file.                                               |
+| **`path`**     | <code>string</code> | The path of the file. Only available on Android and iOS.            |
 | **`name`**     | <code>string</code> | The name of the file.                                               |
 | **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. |
 | **`mimeType`** | <code>string</code> | The mime type of the file.                                          |
