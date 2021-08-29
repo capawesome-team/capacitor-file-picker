@@ -30,8 +30,7 @@ public class FilePickerPlugin: CAPPlugin {
     @objc func parseTypesOption(_ types: [String]) -> [String] {
         var parsedTypes: [String] = []
         for (_, type) in types.enumerated() {
-            let utType: String? = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, type as CFString, nil)?.takeRetainedValue() as String?
-            guard let utType = utType else {
+            guard let utType: String = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, type as CFString, nil)?.takeRetainedValue() as String? else {
                 continue
             }
             parsedTypes.append(utType)
