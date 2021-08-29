@@ -27,7 +27,7 @@ public class FilePickerPlugin: CAPPlugin {
         implementation?.openDocumentPicker(documentTypes: documentTypes)
     }
 
-    func parseTypesOption(_ types: [String]) -> [String] {
+    @objc func parseTypesOption(_ types: [String]) -> [String] {
         var parsedTypes: [String] = []
         for (_, type) in types.enumerated() {
             let utType: String? = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, type as CFString, nil)?.takeRetainedValue() as String?
@@ -39,7 +39,7 @@ public class FilePickerPlugin: CAPPlugin {
         return parsedTypes
     }
 
-    func handleDocumentPickerResult(url: URL?) {
+    @objc func handleDocumentPickerResult(url: URL?) {
         guard let savedCall = savedCall else {
             return
         }
