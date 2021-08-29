@@ -19,14 +19,14 @@ public class FilePickerPlugin: CAPPlugin {
 
     @objc func pickFile(_ call: CAPPluginCall) {
         savedCall = call
-        
+
         let types = call.getArray("types", String.self) ?? []
         let parsedTypes = parseTypesOption(types)
         let documentTypes = parsedTypes.isEmpty ? ["public.data"] : parsedTypes
-        
+
         implementation?.openDocumentPicker(documentTypes: documentTypes)
     }
-    
+
     func parseTypesOption(_ types: [String]) -> [String] {
         var parsedTypes: [String] = []
         for (_, type) in types.enumerated() {
