@@ -1,7 +1,7 @@
 import Foundation
+import Capacitor
 import UIKit
 import MobileCoreServices
-import Capacitor
 
 @objc public class FilePicker: NSObject {
     private var plugin: FilePickerPlugin?
@@ -11,9 +11,9 @@ import Capacitor
         self.plugin = plugin
     }
 
-    public func openDocumentPicker() {
+    public func openDocumentPicker(documentTypes: [String]) {
         DispatchQueue.main.async {
-            let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
+            let documentPicker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .import)
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             self.plugin?.bridge?.viewController?.present(documentPicker, animated: true, completion: nil)
