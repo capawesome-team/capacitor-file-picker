@@ -39,9 +39,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
       input.onchange = () => {
         const file = input.files?.item(0) || null;
         resolve(file);
-        document.body.removeChild(input);
       };
-      document.body.appendChild(input);
       input.click();
     });
   }
