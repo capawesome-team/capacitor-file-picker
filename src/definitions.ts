@@ -7,8 +7,10 @@ export interface FilePickerPlugin {
 
 export interface PickFileOptions {
   /**
-   * Array of valid media types.
-   * Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types.
+   * List of accepted file types.  
+   * Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types.  
+   * 
+   * Example: `['image/png', 'application/pdf']`
    */
   types?: string[];
 }

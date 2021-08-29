@@ -93,9 +93,9 @@ Open the file picker that allows the user to select a file.
 
 #### PickFileOptions
 
-| Prop        | Type                  | Description                                                                                                                                                         |
-| ----------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`types`** | <code>string[]</code> | Array of valid media types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. |
+| Prop        | Type                  | Description                                                                                                                                                                                                      |
+| ----------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`types`** | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. Example: `['image/png', 'application/pdf']` |
 
 </docgen-api>
 
