@@ -1,12 +1,16 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { FilePickerPlugin, PickFileResult } from './definitions';
+import type {
+  FilePickerPlugin,
+  PickFileOptions,
+  PickFileResult,
+} from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   public readonly ERROR_PICK_FILE_CANCELED = 'pickFile canceled.';
 
-  public async pickFile(): Promise<PickFileResult> {
-    const file = await this.openFilePicker();
+  public async pickFile(options?: PickFileOptions): Promise<PickFileResult> {
+    const file = await this.openFilePicker(options);
     if (!file) {
       throw new Error(this.ERROR_PICK_FILE_CANCELED);
     }
@@ -23,11 +27,15 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
     return result;
   }
 
-  private async openFilePicker(): Promise<File | null> {
+  private async openFilePicker(
+    options?: PickFileOptions,
+  ): Promise<File | null> {
+    const accept = options?.types?.join(',') || '';
     return new Promise(resolve => {
       const input = document.createElement('input');
       input.type = 'file';
       input.id = 'capacitor-file-picker';
+      input.accept = accept;
       input.onchange = () => {
         const file = input.files?.item(0) || null;
         resolve(file);

@@ -2,7 +2,17 @@ export interface FilePickerPlugin {
   /**
    * Open the file picker that allows the user to select a file.
    */
-  pickFile(): Promise<PickFileResult>;
+  pickFile(options?: PickFileOptions): Promise<PickFileResult>;
+}
+
+export interface PickFileOptions {
+  /**
+   * List of accepted file types.
+   * Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types.
+   *
+   * Example: `['image/png', 'application/pdf']`
+   */
+  types?: string[];
 }
 
 export interface PickFileResult {

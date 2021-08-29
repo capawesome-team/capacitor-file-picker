@@ -1,5 +1,7 @@
 import Foundation
 import Capacitor
+import UIKit
+import MobileCoreServices
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -17,10 +19,26 @@ public class FilePickerPlugin: CAPPlugin {
 
     @objc func pickFile(_ call: CAPPluginCall) {
         savedCall = call
-        implementation?.openDocumentPicker()
+
+        let types = call.getArray("types", String.self) ?? []
+        let parsedTypes = parseTypesOption(types)
+        let documentTypes = parsedTypes.isEmpty ? ["public.data"] : parsedTypes
+
+        implementation?.openDocumentPicker(documentTypes: documentTypes)
     }
 
-    func handleDocumentPickerResult(url: URL?) {
+    @objc func parseTypesOption(_ types: [String]) -> [String] {
+        var parsedTypes: [String] = []
+        for (_, type) in types.enumerated() {
+            guard let utType: String = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, type as CFString, nil)?.takeRetainedValue() as String? else {
+                continue
+            }
+            parsedTypes.append(utType)
+        }
+        return parsedTypes
+    }
+
+    @objc func handleDocumentPickerResult(url: URL?) {
         guard let savedCall = savedCall else {
             return
         }
