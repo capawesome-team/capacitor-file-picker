@@ -10,7 +10,7 @@ export interface FilePickerPlugin {
 export interface PickFileResult {
   /**
    * The path of the file.
-   * 
+   *
    * Only available on Android and iOS.
    */
   path?: string;

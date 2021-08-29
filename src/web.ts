@@ -3,7 +3,7 @@ import { WebPlugin } from '@capacitor/core';
 import type { FilePickerPlugin, PickFileResult } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
-  public readonly ERROR_PICK_FILE_CANCELED = "pickFile canceled.";
+  public readonly ERROR_PICK_FILE_CANCELED = 'pickFile canceled.';
 
   public async pickFile(): Promise<PickFileResult> {
     const file = await this.openFilePicker();
@@ -32,35 +32,36 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
         const file = input.files?.item(0) || null;
         resolve(file);
         document.body.removeChild(input);
-      }
+      };
       document.body.appendChild(input);
       input.click();
     });
   }
 
-  private async getDataFromFile(file: File ): Promise<string> 
-  {
+  private async getDataFromFile(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         const result = typeof reader.result === 'string' ? reader.result : '';
-        resolve(result);
+        const splittedResult = result.split('base64,');
+        const base64 = splittedResult[1] || '';
+        resolve(base64);
       };
       reader.onerror = error => {
-        reject(error)
+        reject(error);
       };
-  });
+    });
   }
 
   private getNameFromUrl(file: File): string {
     return file.name;
   }
-  
+
   private getMimeTypeFromUrl(file: File): string {
     return file.type;
   }
-  
+
   private getSizeFromUrl(file: File): number {
     return file.size;
   }
