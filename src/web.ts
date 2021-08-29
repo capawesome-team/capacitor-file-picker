@@ -32,14 +32,31 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   ): Promise<File | null> {
     const accept = options?.types?.join(',') || '';
     return new Promise(resolve => {
+      let onChangeFired = false;
       const input = document.createElement('input');
       input.type = 'file';
-      input.id = 'capacitor-file-picker';
       input.accept = accept;
-      input.onchange = () => {
-        const file = input.files?.item(0) || null;
-        resolve(file);
-      };
+      input.addEventListener(
+        'change',
+        () => {
+          onChangeFired = true;
+          const file = input.files?.item(0) || null;
+          resolve(file);
+        },
+        { once: true },
+      );
+      // Workaround to detect when Cancel is selected in the File Selection dialog box.
+      window.addEventListener(
+        'focus',
+        async () => {
+          await this.wait(300);
+          if (onChangeFired) {
+            return;
+          }
+          resolve(null);
+        },
+        { once: true },
+      );
       input.click();
     });
   }
@@ -70,5 +87,9 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
 
   private getSizeFromUrl(file: File): number {
     return file.size;
+  }
+
+  private async wait(delayMs: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, delayMs));
   }
 }
