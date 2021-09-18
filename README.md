@@ -101,8 +101,8 @@ Open the file picker that allows the user to select a file.
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/robingenz/capacitor-file-picker/blob/master/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/robingenz/capacitor-file-picker/blob/main/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](https://github.com/robingenz/capacitor-file-picker/blob/master/LICENSE).
+See [LICENSE](https://github.com/robingenz/capacitor-file-picker/blob/main/LICENSE).
