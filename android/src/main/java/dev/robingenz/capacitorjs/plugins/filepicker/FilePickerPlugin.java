@@ -35,7 +35,9 @@ public class FilePickerPlugin extends Plugin {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        if (parsedTypes != null) {
+        if (parsedTypes == null) {
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, "*/*");
+        } else {
             intent.putExtra(Intent.EXTRA_MIME_TYPES, parsedTypes);
         }
 
