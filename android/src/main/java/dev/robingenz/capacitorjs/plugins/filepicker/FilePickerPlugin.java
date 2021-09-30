@@ -29,7 +29,7 @@ public class FilePickerPlugin extends Plugin {
 
     @PluginMethod
     public void pickFile(PluginCall call) {
-        JSArray types = call.getArray("types");
+        JSArray types = call.getArray("types", null);
         String[] parsedTypes = parseTypesOption(types);
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
