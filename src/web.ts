@@ -18,14 +18,16 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
     const data = await this.getDataFromFile(file);
     const mimeType = this.getMimeTypeFromUrl(file);
     const size = this.getSizeFromUrl(file);
-    // const result: PickFileResult = {
-    //   name,
-    //   data,
-    //   mimeType,
-    //   size,
-    // };
-    // return result;
-    return {files: []}; // TODO
+    // TODO
+    const result: PickFilesResult = {
+      files: [{
+        name,
+        data,
+        mimeType,
+        size,
+      }]
+    };
+    return result;
   }
 
   private async openFilePicker(
