@@ -2,14 +2,14 @@ import { WebPlugin } from '@capacitor/core';
 
 import type {
   FilePickerPlugin,
-  PickFileOptions,
-  PickFileResult,
+  PickFilesOptions,
+  PickFilesResult,
 } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
-  public readonly ERROR_PICK_FILE_CANCELED = 'pickFile canceled.';
+  public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
 
-  public async pickFile(options?: PickFileOptions): Promise<PickFileResult> {
+  public async pickFiles(options?: PickFilesOptions): Promise<PickFilesResult> {
     const file = await this.openFilePicker(options);
     if (!file) {
       throw new Error(this.ERROR_PICK_FILE_CANCELED);
@@ -18,17 +18,18 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
     const data = await this.getDataFromFile(file);
     const mimeType = this.getMimeTypeFromUrl(file);
     const size = this.getSizeFromUrl(file);
-    const result: PickFileResult = {
-      name,
-      data,
-      mimeType,
-      size,
-    };
-    return result;
+    // const result: PickFileResult = {
+    //   name,
+    //   data,
+    //   mimeType,
+    //   size,
+    // };
+    // return result;
+    return {files: []}; // TODO
   }
 
   private async openFilePicker(
-    options?: PickFileOptions,
+    options?: PickFilesOptions,
   ): Promise<File | null> {
     const accept = options?.types?.join(',') || '';
     return new Promise(resolve => {

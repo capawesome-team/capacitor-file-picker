@@ -19,8 +19,8 @@ import org.json.JSONException;
 @CapacitorPlugin(name = "FilePicker")
 public class FilePickerPlugin extends Plugin {
 
-    public static final String ERROR_PICK_FILE_FAILED = "pickFile failed.";
-    public static final String ERROR_PICK_FILE_CANCELED = "pickFile canceled.";
+    public static final String ERROR_PICK_FILE_FAILED = "pickFiles failed.";
+    public static final String ERROR_PICK_FILE_CANCELED = "pickFiles canceled.";
     private FilePicker implementation;
 
     public void load() {
@@ -28,13 +28,15 @@ public class FilePickerPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void pickFile(PluginCall call) {
+    public void pickFiles(PluginCall call) {
         JSArray types = call.getArray("types", null);
+        boolean multiple = call.getBoolean("multiple", false);
         String[] parsedTypes = parseTypesOption(types);
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
         if (parsedTypes == null) {
             intent.putExtra(Intent.EXTRA_MIME_TYPES, "*/*");
         } else {

@@ -9,7 +9,7 @@ import MobileCoreServices
  */
 @objc(FilePickerPlugin)
 public class FilePickerPlugin: CAPPlugin {
-    public let errorPickFileCanceled = "pickFile canceled."
+    public let errorPickFileCanceled = "pickFiles canceled."
     private var implementation: FilePicker?
     private var savedCall: CAPPluginCall?
 
@@ -17,7 +17,7 @@ public class FilePickerPlugin: CAPPlugin {
         self.implementation = FilePicker(self)
     }
 
-    @objc func pickFile(_ call: CAPPluginCall) {
+    @objc func pickFiles(_ call: CAPPluginCall) {
         savedCall = call
 
         let types = call.getArray("types", String.self) ?? []

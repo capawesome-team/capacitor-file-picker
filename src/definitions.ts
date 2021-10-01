@@ -1,11 +1,11 @@
 export interface FilePickerPlugin {
   /**
-   * Open the file picker that allows the user to select a file.
+   * Open the file picker that allows the user to select one or more files.
    */
-  pickFile(options?: PickFileOptions): Promise<PickFileResult>;
+  pickFiles(options?: PickFilesOptions): Promise<PickFilesResult>;
 }
 
-export interface PickFileOptions {
+export interface PickFilesOptions {
   /**
    * List of accepted file types.
    * Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types.
@@ -13,29 +13,34 @@ export interface PickFileOptions {
    * Example: `['image/png', 'application/pdf']`
    */
   types?: string[];
+  multiple?: boolean;
 }
 
-export interface PickFileResult {
+export interface PickFilesResult {
+  files: PickedFile[];
+}
+
+export interface PickedFile {
   /**
    * The path of the file.
    *
    * Only available on Android and iOS.
    */
-  path?: string;
-  /**
-   * The name of the file.
-   */
-  name: string;
-  /**
-   * The Base64 string representation of the data contained in the file.
-   */
-  data: string;
-  /**
-   * The mime type of the file.
-   */
-  mimeType: string;
-  /**
-   * The size of the file.
-   */
-  size: number;
+   path?: string;
+   /**
+    * The name of the file.
+    */
+   name: string;
+   /**
+    * The Base64 string representation of the data contained in the file.
+    */
+   data: string;
+   /**
+    * The mime type of the file.
+    */
+   mimeType: string;
+   /**
+    * The size of the file.
+    */
+   size: number;
 }
