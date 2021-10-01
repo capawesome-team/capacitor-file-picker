@@ -10,41 +10,46 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
 
   public async pickFiles(options?: PickFilesOptions): Promise<PickFilesResult> {
-    const file = await this.openFilePicker(options);
-    if (!file) {
+    const files = await this.openFilePicker(options);
+    if (!files) {
       throw new Error(this.ERROR_PICK_FILE_CANCELED);
     }
-    const name = this.getNameFromUrl(file);
-    const data = await this.getDataFromFile(file);
-    const mimeType = this.getMimeTypeFromUrl(file);
-    const size = this.getSizeFromUrl(file);
-    // TODO
     const result: PickFilesResult = {
-      files: [{
+      files: [],
+    };
+    for (const file of files) {
+      const name = this.getNameFromUrl(file);
+      const data = await this.getDataFromFile(file);
+      const mimeType = this.getMimeTypeFromUrl(file);
+      const size = this.getSizeFromUrl(file);
+      result.files.push({
+        path: undefined,
         name,
         data,
         mimeType,
         size,
-      }]
-    };
+      });
+    }
     return result;
   }
 
   private async openFilePicker(
     options?: PickFilesOptions,
-  ): Promise<File | null> {
+  ): Promise<File[] | undefined> {
     const accept = options?.types?.join(',') || '';
+    const multiple = !!options?.multiple;
     return new Promise(resolve => {
       let onChangeFired = false;
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = accept;
+      input.multiple = multiple;
       input.addEventListener(
         'change',
         () => {
           onChangeFired = true;
-          const file = input.files?.item(0) || null;
-          resolve(file);
+          const files = Array.from(input.files || []);
+          resolve(files);
         },
         { once: true },
       );
@@ -56,7 +61,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
           if (onChangeFired) {
             return;
           }
-          resolve(null);
+          resolve(undefined);
         },
         { once: true },
       );

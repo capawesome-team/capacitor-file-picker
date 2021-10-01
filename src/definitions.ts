@@ -13,34 +13,39 @@ export interface PickFilesOptions {
    * Example: `['image/png', 'application/pdf']`
    */
   types?: string[];
+  /**
+   * Whether multiple files may be selected.
+   *
+   * Default: `false`
+   */
   multiple?: boolean;
 }
 
 export interface PickFilesResult {
-  files: PickedFile[];
+  files: File[];
 }
 
-export interface PickedFile {
+export interface File {
   /**
    * The path of the file.
    *
    * Only available on Android and iOS.
    */
-   path?: string;
-   /**
-    * The name of the file.
-    */
-   name: string;
-   /**
-    * The Base64 string representation of the data contained in the file.
-    */
-   data: string;
-   /**
-    * The mime type of the file.
-    */
-   mimeType: string;
-   /**
-    * The size of the file.
-    */
-   size: number;
+  path?: string;
+  /**
+   * The name of the file.
+   */
+  name: string;
+  /**
+   * The Base64 string representation of the data contained in the file.
+   */
+  data: string;
+  /**
+   * The mime type of the file.
+   */
+  mimeType: string;
+  /**
+   * The size of the file.
+   */
+  size: number;
 }

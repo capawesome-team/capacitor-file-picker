@@ -13,7 +13,6 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -97,12 +96,12 @@ public class FilePickerPlugin extends Plugin {
             Uri uri = data.getData();
             uris.add(uri);
         } else {
-            for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+            for (int i = 0; i < data.getClipData().getItemCount(); i++) {
                 Uri uri = data.getClipData().getItemAt(i).getUri();
                 uris.add(uri);
             }
         }
-        for(int i = 0; i < uris.size(); i++) {
+        for (int i = 0; i < uris.size(); i++) {
             Uri uri = uris.get(i);
             JSObject fileResult = new JSObject();
             fileResult.put("path", implementation.getPathFromUri(uri));
