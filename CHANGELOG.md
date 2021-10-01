@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.2...v0.1.3) (2021-10-01)
+
+
+### Bug Fixes
+
+* local files are not shown ([0115e2b](https://github.com/robingenz/capacitor-file-picker/commit/0115e2bd9da125bf3ad5ea67450b2d5d5b05b7e7))
+
 ### [0.1.2](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.1...v0.1.2) (2021-08-29)
 
 
