@@ -10,6 +10,8 @@ export interface PickFilesOptions {
    * List of accepted file types.
    * Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types.
    *
+   * This option cannot be used with `multiple: true` on Android.
+   *
    * Example: `['image/png', 'application/pdf']`
    */
   types?: string[];
