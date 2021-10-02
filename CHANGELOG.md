@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.3...v0.2.0) (2021-10-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Method `pickFile` is replaced by `pickFiles`
+
+### Features
+
+* support for multiple file selection ([#14](https://github.com/robingenz/capacitor-file-picker/issues/14)) ([ea7f055](https://github.com/robingenz/capacitor-file-picker/commit/ea7f055d6a359629fc2476f50334f9d27431ffed))
+
 ### [0.1.3](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.2...v0.1.3) (2021-10-01)
 
 
