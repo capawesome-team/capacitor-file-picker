@@ -13,14 +13,15 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
 
 @CapacitorPlugin(name = "FilePicker")
 public class FilePickerPlugin extends Plugin {
 
-    public static final String ERROR_PICK_FILE_FAILED = "pickFile failed.";
-    public static final String ERROR_PICK_FILE_CANCELED = "pickFile canceled.";
+    public static final String ERROR_PICK_FILE_FAILED = "pickFiles failed.";
+    public static final String ERROR_PICK_FILE_CANCELED = "pickFiles canceled.";
     private FilePicker implementation;
 
     public void load() {
@@ -28,22 +29,26 @@ public class FilePickerPlugin extends Plugin {
     }
 
     @PluginMethod
-    public void pickFile(PluginCall call) {
+    public void pickFiles(PluginCall call) {
         JSArray types = call.getArray("types", null);
+        boolean multiple = call.getBoolean("multiple", false);
         String[] parsedTypes = parseTypesOption(types);
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        if (parsedTypes == null) {
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, "*/*");
-        } else {
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, parsedTypes);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+        if (multiple == false) {
+            if (parsedTypes == null) {
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, "*/*");
+            } else {
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, parsedTypes);
+            }
         }
 
         intent = Intent.createChooser(intent, "Choose a file");
 
-        startActivityForResult(call, intent, "pickFileResult");
+        startActivityForResult(call, intent, "pickFilesResult");
     }
 
     @Nullable
@@ -61,21 +66,14 @@ public class FilePickerPlugin extends Plugin {
     }
 
     @ActivityCallback
-    private void pickFileResult(PluginCall call, ActivityResult result) {
+    private void pickFilesResult(PluginCall call, ActivityResult result) {
         if (call == null) {
             return;
         }
         int resultCode = result.getResultCode();
-        Intent data = result.getData();
         switch (resultCode) {
             case Activity.RESULT_OK:
-                Uri uri = data.getData();
-                JSObject callResult = new JSObject();
-                callResult.put("path", implementation.getPathFromUri(uri));
-                callResult.put("name", implementation.getNameFromUri(uri));
-                callResult.put("data", implementation.getDataFromUri(uri));
-                callResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
-                callResult.put("size", implementation.getSizeFromUri(uri));
+                JSObject callResult = createPickFilesResult(result.getData());
                 call.resolve(callResult);
                 break;
             case Activity.RESULT_CANCELED:
@@ -84,5 +82,36 @@ public class FilePickerPlugin extends Plugin {
             default:
                 call.reject(ERROR_PICK_FILE_FAILED);
         }
+    }
+
+    private JSObject createPickFilesResult(@Nullable Intent data) {
+        JSObject callResult = new JSObject();
+        List<JSObject> filesResultList = new ArrayList<>();
+        if (data == null) {
+            callResult.put("files", JSArray.from(filesResultList));
+            return callResult;
+        }
+        List<Uri> uris = new ArrayList<>();
+        if (data.getClipData() == null) {
+            Uri uri = data.getData();
+            uris.add(uri);
+        } else {
+            for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                Uri uri = data.getClipData().getItemAt(i).getUri();
+                uris.add(uri);
+            }
+        }
+        for (int i = 0; i < uris.size(); i++) {
+            Uri uri = uris.get(i);
+            JSObject fileResult = new JSObject();
+            fileResult.put("path", implementation.getPathFromUri(uri));
+            fileResult.put("name", implementation.getNameFromUri(uri));
+            fileResult.put("data", implementation.getDataFromUri(uri));
+            fileResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
+            fileResult.put("size", implementation.getSizeFromUri(uri));
+            filesResultList.add(fileResult);
+        }
+        callResult.put("files", JSArray.from(filesResultList.toArray()));
+        return callResult;
     }
 }

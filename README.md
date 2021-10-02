@@ -43,8 +43,11 @@ A working example can be found here: [robingenz/capacitor-plugin-demo](https://g
 ```typescript
 import { FilePicker } from '@robingenz/capacitor-file-picker';
 
-const pickFile = async () => {
-  const result = await FilePicker.pickFile();
+const pickFiles = async () => {
+  const result = await FilePicker.pickFiles({
+    types: ['image/png'],
+    multiple: true,
+  });
 };
 ```
 
@@ -52,7 +55,7 @@ const pickFile = async () => {
 
 <docgen-index>
 
-* [`pickFile(...)`](#pickfile)
+* [`pickFiles(...)`](#pickfiles)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -60,19 +63,19 @@ const pickFile = async () => {
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### pickFile(...)
+### pickFiles(...)
 
 ```typescript
-pickFile(options?: PickFileOptions | undefined) => Promise<PickFileResult>
+pickFiles(options?: PickFilesOptions | undefined) => Promise<PickFilesResult>
 ```
 
-Open the file picker that allows the user to select a file.
+Open the file picker that allows the user to select one or more files.
 
-| Param         | Type                                                        |
-| ------------- | ----------------------------------------------------------- |
-| **`options`** | <code><a href="#pickfileoptions">PickFileOptions</a></code> |
+| Param         | Type                                                          |
+| ------------- | ------------------------------------------------------------- |
+| **`options`** | <code><a href="#pickfilesoptions">PickFilesOptions</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pickfileresult">PickFileResult</a>&gt;</code>
+**Returns:** <code>Promise&lt;<a href="#pickfilesresult">PickFilesResult</a>&gt;</code>
 
 --------------------
 
@@ -80,7 +83,14 @@ Open the file picker that allows the user to select a file.
 ### Interfaces
 
 
-#### PickFileResult
+#### PickFilesResult
+
+| Prop        | Type                |
+| ----------- | ------------------- |
+| **`files`** | <code>File[]</code> |
+
+
+#### File
 
 | Prop           | Type                | Description                                                         |
 | -------------- | ------------------- | ------------------------------------------------------------------- |
@@ -91,11 +101,12 @@ Open the file picker that allows the user to select a file.
 | **`size`**     | <code>number</code> | The size of the file.                                               |
 
 
-#### PickFileOptions
+#### PickFilesOptions
 
-| Prop        | Type                  | Description                                                                                                                                                                                                      |
-| ----------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`types`** | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. Example: `['image/png', 'application/pdf']` |
+| Prop           | Type                  | Description                                                                                                                                                                                                                                                                   |
+| -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. Example: `['image/png', 'application/pdf']` |
+| **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected. Default: `false`                                                                                                                                                                                                                      |
 
 </docgen-api>
 

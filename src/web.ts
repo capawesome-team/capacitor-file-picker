@@ -2,46 +2,54 @@ import { WebPlugin } from '@capacitor/core';
 
 import type {
   FilePickerPlugin,
-  PickFileOptions,
-  PickFileResult,
+  PickFilesOptions,
+  PickFilesResult,
 } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
-  public readonly ERROR_PICK_FILE_CANCELED = 'pickFile canceled.';
+  public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
 
-  public async pickFile(options?: PickFileOptions): Promise<PickFileResult> {
-    const file = await this.openFilePicker(options);
-    if (!file) {
+  public async pickFiles(options?: PickFilesOptions): Promise<PickFilesResult> {
+    const files = await this.openFilePicker(options);
+    if (!files) {
       throw new Error(this.ERROR_PICK_FILE_CANCELED);
     }
-    const name = this.getNameFromUrl(file);
-    const data = await this.getDataFromFile(file);
-    const mimeType = this.getMimeTypeFromUrl(file);
-    const size = this.getSizeFromUrl(file);
-    const result: PickFileResult = {
-      name,
-      data,
-      mimeType,
-      size,
+    const result: PickFilesResult = {
+      files: [],
     };
+    for (const file of files) {
+      const name = this.getNameFromUrl(file);
+      const data = await this.getDataFromFile(file);
+      const mimeType = this.getMimeTypeFromUrl(file);
+      const size = this.getSizeFromUrl(file);
+      result.files.push({
+        path: undefined,
+        name,
+        data,
+        mimeType,
+        size,
+      });
+    }
     return result;
   }
 
   private async openFilePicker(
-    options?: PickFileOptions,
-  ): Promise<File | null> {
+    options?: PickFilesOptions,
+  ): Promise<File[] | undefined> {
     const accept = options?.types?.join(',') || '';
+    const multiple = !!options?.multiple;
     return new Promise(resolve => {
       let onChangeFired = false;
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = accept;
+      input.multiple = multiple;
       input.addEventListener(
         'change',
         () => {
           onChangeFired = true;
-          const file = input.files?.item(0) || null;
-          resolve(file);
+          const files = Array.from(input.files || []);
+          resolve(files);
         },
         { once: true },
       );
@@ -53,7 +61,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
           if (onChangeFired) {
             return;
           }
-          resolve(null);
+          resolve(undefined);
         },
         { once: true },
       );

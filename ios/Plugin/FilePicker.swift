@@ -11,11 +11,11 @@ import MobileCoreServices
         self.plugin = plugin
     }
 
-    public func openDocumentPicker(documentTypes: [String]) {
+    public func openDocumentPicker(multiple: Bool, documentTypes: [String]) {
         DispatchQueue.main.async {
             let documentPicker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .import)
             documentPicker.delegate = self
-            documentPicker.allowsMultipleSelection = false
+            documentPicker.allowsMultipleSelection = multiple
             documentPicker.modalPresentationStyle = .fullScreen
             self.plugin?.bridge?.viewController?.present(documentPicker, animated: true, completion: nil)
         }
@@ -53,10 +53,10 @@ import MobileCoreServices
 
 extension FilePicker: UIDocumentPickerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        plugin?.handleDocumentPickerResult(url: urls[0])
+        plugin?.handleDocumentPickerResult(urls: urls)
     }
 
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        plugin?.handleDocumentPickerResult(url: nil)
+        plugin?.handleDocumentPickerResult(urls: nil)
     }
 }

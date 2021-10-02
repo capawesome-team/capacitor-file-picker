@@ -1,21 +1,33 @@
 export interface FilePickerPlugin {
   /**
-   * Open the file picker that allows the user to select a file.
+   * Open the file picker that allows the user to select one or more files.
    */
-  pickFile(options?: PickFileOptions): Promise<PickFileResult>;
+  pickFiles(options?: PickFilesOptions): Promise<PickFilesResult>;
 }
 
-export interface PickFileOptions {
+export interface PickFilesOptions {
   /**
    * List of accepted file types.
    * Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types.
    *
+   * This option cannot be used with `multiple: true` on Android.
+   *
    * Example: `['image/png', 'application/pdf']`
    */
   types?: string[];
+  /**
+   * Whether multiple files may be selected.
+   *
+   * Default: `false`
+   */
+  multiple?: boolean;
 }
 
-export interface PickFileResult {
+export interface PickFilesResult {
+  files: File[];
+}
+
+export interface File {
   /**
    * The path of the file.
    *

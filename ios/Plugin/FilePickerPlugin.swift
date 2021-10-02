@@ -9,7 +9,7 @@ import MobileCoreServices
  */
 @objc(FilePickerPlugin)
 public class FilePickerPlugin: CAPPlugin {
-    public let errorPickFileCanceled = "pickFile canceled."
+    public let errorPickFileCanceled = "pickFiles canceled."
     private var implementation: FilePicker?
     private var savedCall: CAPPluginCall?
 
@@ -17,14 +17,15 @@ public class FilePickerPlugin: CAPPlugin {
         self.implementation = FilePicker(self)
     }
 
-    @objc func pickFile(_ call: CAPPluginCall) {
+    @objc func pickFiles(_ call: CAPPluginCall) {
         savedCall = call
 
+        let multiple = call.getBool("multiple", false)
         let types = call.getArray("types", String.self) ?? []
         let parsedTypes = parseTypesOption(types)
         let documentTypes = parsedTypes.isEmpty ? ["public.data"] : parsedTypes
 
-        implementation?.openDocumentPicker(documentTypes: documentTypes)
+        implementation?.openDocumentPicker(multiple: multiple, documentTypes: documentTypes)
     }
 
     @objc func parseTypesOption(_ types: [String]) -> [String] {
@@ -38,22 +39,27 @@ public class FilePickerPlugin: CAPPlugin {
         return parsedTypes
     }
 
-    @objc func handleDocumentPickerResult(url: URL?) {
+    @objc func handleDocumentPickerResult(urls: [URL]?) {
         guard let savedCall = savedCall else {
             return
         }
-        guard let url = url else {
+        guard let urls = urls else {
             savedCall.reject(errorPickFileCanceled)
             return
         }
         do {
-            savedCall.resolve([
-                "path": implementation?.getPathFromUrl(url) ?? "",
-                "name": implementation?.getNameFromUrl(url) ?? "",
-                "data": try implementation?.getDataFromUrl(url) ?? "",
-                "mimeType": implementation?.getMimeTypeFromUrl(url) ?? "",
-                "size": try implementation?.getSizeFromUrl(url) ?? ""
-            ])
+            var result = JSObject()
+            let filesResult = try urls.map {(url: URL) -> JSObject in
+                return [
+                    "path": implementation?.getPathFromUrl(url) ?? "",
+                    "name": implementation?.getNameFromUrl(url) ?? "",
+                    "data": try implementation?.getDataFromUrl(url) ?? "",
+                    "mimeType": implementation?.getMimeTypeFromUrl(url) ?? "",
+                    "size": try implementation?.getSizeFromUrl(url) ?? ""
+                ]
+            }
+            result["files"] = filesResult
+            savedCall.resolve(result)
         } catch let error as NSError {
             savedCall.reject(error.localizedDescription, nil, error)
             return
