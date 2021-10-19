@@ -100,15 +100,19 @@ public class FilePickerPlugin extends Plugin {
                 Uri uri = data.getClipData().getItemAt(i).getUri();
                 uris.add(uri);
             }
-        }
+        }        
         for (int i = 0; i < uris.size(); i++) {
             Uri uri = uris.get(i);
             JSObject fileResult = new JSObject();
+            long size = 0;
+            size = implementation.getSizeFromUri(uri);
+            fileResult.put("size", size);
             fileResult.put("path", implementation.getPathFromUri(uri));
             fileResult.put("name", implementation.getNameFromUri(uri));
-            fileResult.put("data", implementation.getDataFromUri(uri));
             fileResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
-            fileResult.put("size", implementation.getSizeFromUri(uri));
+            if(size <= (15 * 1024 * 1024)) {
+              fileResult.put("data", implementation.getDataFromUri(uri));
+            }
             filesResultList.add(fileResult);
         }
         callResult.put("files", JSArray.from(filesResultList.toArray()));
