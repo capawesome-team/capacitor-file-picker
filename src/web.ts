@@ -57,7 +57,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
       window.addEventListener(
         'focus',
         async () => {
-          await this.wait(300);
+          await this.wait(1000);
           if (onChangeFired) {
             return;
           }
