@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.0...v0.2.1) (2021-10-31)
+
+
+### Bug Fixes
+
+* **android:** local files are not shown with empty `types` array ([#18](https://github.com/robingenz/capacitor-file-picker/issues/18)) ([fc2c6aa](https://github.com/robingenz/capacitor-file-picker/commit/fc2c6aac005aa8170346fb008f47fa769f515eb1))
+* **web:** increase timeout to detect `cancel` ([#19](https://github.com/robingenz/capacitor-file-picker/issues/19)) ([d03c001](https://github.com/robingenz/capacitor-file-picker/commit/d03c001af8825f7a5aa50ba1d08324340d476abe))
+
 ## [0.2.0](https://github.com/robingenz/capacitor-file-picker/compare/v0.1.3...v0.2.0) (2021-10-02)
 
 
