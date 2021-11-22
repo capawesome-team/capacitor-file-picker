@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.1...v0.2.2) (2021-11-22)
+
+
+### Bug Fixes
+
+* **android:** add fallback for file name ([#20](https://github.com/robingenz/capacitor-file-picker/issues/20)) ([96fc1e6](https://github.com/robingenz/capacitor-file-picker/commit/96fc1e679588b251e7b5151e924f800f182ca500))
+
 ### [0.2.1](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.0...v0.2.1) (2021-10-31)
 
 
