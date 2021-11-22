@@ -42,6 +42,9 @@ public class FilePicker {
             displayName = cursor.getString(columnIdx);
             cursor.close();
         }
+        if (displayName == null || displayName.length() < 1) {
+            displayName = uri.getLastPathSegment();
+        }
         return displayName;
     }
 
