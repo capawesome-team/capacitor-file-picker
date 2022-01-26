@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.2...v0.2.3) (2022-01-26)
+
+
+### Bug Fixes
+
+* inline source code in esm map files ([41952b2](https://github.com/robingenz/capacitor-file-picker/commit/41952b26a6c82cca3f7061fe630e0413a781fff1))
+
 ### [0.2.2](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.1...v0.2.2) (2021-11-22)
 
 
