@@ -55,10 +55,10 @@ public class FilePickerPlugin: CAPPlugin {
                 file["path"] = implementation?.getPathFromUrl(url) ?? ""
                 file["name"] = implementation?.getNameFromUrl(url) ?? ""
                 if readData == true {
-                    file["data"] = implementation?.getDataFromUrl(url) ?? ""
+                    file["data"] = try implementation?.getDataFromUrl(url) ?? ""
                 }
                 file["mimeType"] = implementation?.getMimeTypeFromUrl(url) ?? ""
-                file["size"] = implementation?.getSizeFromUrl(url) ?? ""
+                file["size"] = try implementation?.getSizeFromUrl(url) ?? ""
                 return file
             }
             result["files"] = filesResult
