@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.3...v0.3.0) (2022-02-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* Property `data` of `File` is now optional
+
+### Features
+
+* add `readData` option ([#23](https://github.com/robingenz/capacitor-file-picker/issues/23)) ([ed29f2e](https://github.com/robingenz/capacitor-file-picker/commit/ed29f2e61b70a95a09e2d9e237b7005b97a2d38b))
+
 ### [0.2.3](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.2...v0.2.3) (2022-01-26)
 
 
