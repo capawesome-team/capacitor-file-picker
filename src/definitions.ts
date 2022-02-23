@@ -21,6 +21,12 @@ export interface PickFilesOptions {
    * Default: `false`
    */
   multiple?: boolean;
+  /**
+   * Whether to read the file data.
+   *
+   * Default: `true`
+   */
+  readData?: boolean;
 }
 
 export interface PickFilesResult {
@@ -40,8 +46,10 @@ export interface File {
   name: string;
   /**
    * The Base64 string representation of the data contained in the file.
+   *
+   * Is only provided if `readData` is set to `true`.
    */
-  data: string;
+  data?: string;
   /**
    * The mime type of the file.
    */
