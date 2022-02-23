@@ -92,13 +92,13 @@ Open the file picker that allows the user to select one or more files.
 
 #### File
 
-| Prop           | Type                | Description                                                         |
-| -------------- | ------------------- | ------------------------------------------------------------------- |
-| **`path`**     | <code>string</code> | The path of the file. Only available on Android and iOS.            |
-| **`name`**     | <code>string</code> | The name of the file.                                               |
-| **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. |
-| **`mimeType`** | <code>string</code> | The mime type of the file.                                          |
-| **`size`**     | <code>number</code> | The size of the file.                                               |
+| Prop           | Type                | Description                                                                                                          |
+| -------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **`path`**     | <code>string</code> | The path of the file. Only available on Android and iOS.                                                             |
+| **`name`**     | <code>string</code> | The name of the file.                                                                                                |
+| **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |
+| **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |
+| **`size`**     | <code>number</code> | The size of the file.                                                                                                |
 
 
 #### PickFilesOptions
@@ -107,6 +107,7 @@ Open the file picker that allows the user to select one or more files.
 | -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. Example: `['image/png', 'application/pdf']` |
 | **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected. Default: `false`                                                                                                                                                                                                                      |
+| **`readData`** | <code>boolean</code>  | Whether to read the file data. Default: `true`                                                                                                                                                                                                                                |
 
 </docgen-api>
 
