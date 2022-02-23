@@ -43,6 +43,7 @@ public class FilePickerPlugin: CAPPlugin {
         guard let savedCall = savedCall else {
             return
         }
+        let readData = savedCall.getBool("readData", true)
         guard let urls = urls else {
             savedCall.reject(errorPickFileCanceled)
             return
@@ -50,13 +51,15 @@ public class FilePickerPlugin: CAPPlugin {
         do {
             var result = JSObject()
             let filesResult = try urls.map {(url: URL) -> JSObject in
-                return [
-                    "path": implementation?.getPathFromUrl(url) ?? "",
-                    "name": implementation?.getNameFromUrl(url) ?? "",
-                    "data": try implementation?.getDataFromUrl(url) ?? "",
-                    "mimeType": implementation?.getMimeTypeFromUrl(url) ?? "",
-                    "size": try implementation?.getSizeFromUrl(url) ?? ""
-                ]
+                var file = JSObject()
+                file["path"] = implementation?.getPathFromUrl(url) ?? ""
+                file["name"] = implementation?.getNameFromUrl(url) ?? ""
+                if readData == true {
+                    file["data"] = try implementation?.getDataFromUrl(url) ?? ""
+                }
+                file["mimeType"] = implementation?.getMimeTypeFromUrl(url) ?? ""
+                file["size"] = try implementation?.getSizeFromUrl(url) ?? ""
+                return file
             }
             result["files"] = filesResult
             savedCall.resolve(result)

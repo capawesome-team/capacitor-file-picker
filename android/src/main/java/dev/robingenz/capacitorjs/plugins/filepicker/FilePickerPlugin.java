@@ -70,10 +70,11 @@ public class FilePickerPlugin extends Plugin {
         if (call == null) {
             return;
         }
+        boolean readData = call.getBoolean("readData", true);
         int resultCode = result.getResultCode();
         switch (resultCode) {
             case Activity.RESULT_OK:
-                JSObject callResult = createPickFilesResult(result.getData());
+                JSObject callResult = createPickFilesResult(result.getData(), readData);
                 call.resolve(callResult);
                 break;
             case Activity.RESULT_CANCELED:
@@ -84,7 +85,7 @@ public class FilePickerPlugin extends Plugin {
         }
     }
 
-    private JSObject createPickFilesResult(@Nullable Intent data) {
+    private JSObject createPickFilesResult(@Nullable Intent data, boolean readData) {
         JSObject callResult = new JSObject();
         List<JSObject> filesResultList = new ArrayList<>();
         if (data == null) {
@@ -106,7 +107,9 @@ public class FilePickerPlugin extends Plugin {
             JSObject fileResult = new JSObject();
             fileResult.put("path", implementation.getPathFromUri(uri));
             fileResult.put("name", implementation.getNameFromUri(uri));
-            fileResult.put("data", implementation.getDataFromUri(uri));
+            if (readData) {
+                fileResult.put("data", implementation.getDataFromUri(uri));
+            }
             fileResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
             fileResult.put("size", implementation.getSizeFromUri(uri));
             filesResultList.add(fileResult);

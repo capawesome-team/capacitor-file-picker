@@ -4,31 +4,31 @@ import type {
   FilePickerPlugin,
   PickFilesOptions,
   PickFilesResult,
+  File as FileModel,
 } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
 
   public async pickFiles(options?: PickFilesOptions): Promise<PickFilesResult> {
-    const files = await this.openFilePicker(options);
-    if (!files) {
+    const pickedFiles = await this.openFilePicker(options);
+    if (!pickedFiles) {
       throw new Error(this.ERROR_PICK_FILE_CANCELED);
     }
     const result: PickFilesResult = {
       files: [],
     };
-    for (const file of files) {
-      const name = this.getNameFromUrl(file);
-      const data = await this.getDataFromFile(file);
-      const mimeType = this.getMimeTypeFromUrl(file);
-      const size = this.getSizeFromUrl(file);
-      result.files.push({
+    for (const pickedFile of pickedFiles) {
+      const file: FileModel = {
         path: undefined,
-        name,
-        data,
-        mimeType,
-        size,
-      });
+        name: this.getNameFromUrl(pickedFile),
+        mimeType: this.getMimeTypeFromUrl(pickedFile),
+        size: this.getSizeFromUrl(pickedFile),
+      };
+      if (options?.readData !== false) {
+        file.data = await this.getDataFromFile(pickedFile);
+      }
+      result.files.push(file);
     }
     return result;
   }
