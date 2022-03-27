@@ -98,7 +98,7 @@ Open the file picker that allows the user to select one or more files.
 | **`name`**     | <code>string</code> | The name of the file.                                                                                                |
 | **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |
 | **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |
-| **`size`**     | <code>number</code> | The size of the file.                                                                                                |
+| **`size`**     | <code>number</code> | The size of the file in bytes.                                                                                       |
 
 
 #### PickFilesOptions

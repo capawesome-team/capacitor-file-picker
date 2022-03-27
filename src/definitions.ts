@@ -55,7 +55,7 @@ export interface File {
    */
   mimeType: string;
   /**
-   * The size of the file.
+   * The size of the file in bytes.
    */
   size: number;
 }
