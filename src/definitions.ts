@@ -30,10 +30,10 @@ export interface PickFilesOptions {
 }
 
 export interface PickFilesResult {
-  files: FileModel[];
+  files: FileResult[];
 }
 
-export interface FileModel {
+export interface FileResult {
   /**
    * The path of the file.
    *
@@ -60,11 +60,9 @@ export interface FileModel {
   size: number;
 
   /**
-   * The File instance
+   * The File instance.
    *
    * Only available on Web.
-   *
-   * {@Link https://developer.mozilla.org/en-US/docs/Web/API/File}
    */
   raw?: File;
 }

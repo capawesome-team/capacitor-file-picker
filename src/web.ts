@@ -4,7 +4,7 @@ import type {
   FilePickerPlugin,
   PickFilesOptions,
   PickFilesResult,
-  FileModel,
+  FileResult,
 } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
@@ -19,7 +19,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
       files: [],
     };
     for (const pickedFile of pickedFiles) {
-      const file: FileModel = {
+      const file: FileResult = {
         path: undefined,
         name: this.getNameFromUrl(pickedFile),
         mimeType: this.getMimeTypeFromUrl(pickedFile),

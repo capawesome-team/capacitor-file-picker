@@ -51,6 +51,24 @@ const pickFiles = async () => {
 };
 ```
 
+For web you can use raw [File interface](https://developer.mozilla.org/docs/Web/API/File):
+
+```ts
+import { Capacitor } from '@capacitor/core';
+
+// ...
+
+const [file] = result.files;
+
+if (!Capacitor.isNativePlatform()) {
+  const formData = new FormData();
+
+  if (file.raw) {
+    formData.append('file', file.raw, file.name);
+  }
+}
+```
+
 ## API
 
 <docgen-index>
@@ -85,12 +103,12 @@ Open the file picker that allows the user to select one or more files.
 
 #### PickFilesResult
 
-| Prop        | Type                |
-| ----------- | ------------------- |
-| **`files`** | <code>File[]</code> |
+| Prop        | Type                      |
+| ----------- | ------------------------- |
+| **`files`** | <code>FileResult[]</code> |
 
 
-#### File
+#### FileResult
 
 | Prop           | Type                | Description                                                                                                          |
 | -------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -99,6 +117,7 @@ Open the file picker that allows the user to select one or more files.
 | **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |
 | **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |
 | **`size`**     | <code>number</code> | The size of the file in bytes.                                                                                       |
+| **`raw`**      | <code>File</code>   | The File instance. Only available on Web.                                                                            |
 
 
 #### PickFilesOptions
