@@ -4,7 +4,7 @@ import type {
   FilePickerPlugin,
   PickFilesOptions,
   PickFilesResult,
-  File as FileModel,
+  FileModel,
 } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
@@ -24,6 +24,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
         name: this.getNameFromUrl(pickedFile),
         mimeType: this.getMimeTypeFromUrl(pickedFile),
         size: this.getSizeFromUrl(pickedFile),
+        raw: pickedFile,
       };
       if (options?.readData !== false) {
         file.data = await this.getDataFromFile(pickedFile);
