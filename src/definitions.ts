@@ -58,4 +58,10 @@ export interface File {
    * The size of the file in bytes.
    */
   size: number;
+  /**
+   * The Blob instance of the file.
+   *
+   * Only available on Web.
+   */
+  blob?: Blob;
 }
