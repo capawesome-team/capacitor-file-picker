@@ -49,6 +49,19 @@ const pickFiles = async () => {
     multiple: true,
   });
 };
+
+const appendFileToFormData = async () => {
+  const result = await FilePicker.pickFiles();
+  const file = result.files[0];
+
+  const formData = new FormData();
+  if (file.blob) {
+    const rawFile = new File(file.blob, file.name, {
+      type: file.mimeType,
+    });
+    formData.append('file', rawFile, file.name);
+  }
+};
 ```
 
 ## API
@@ -99,6 +112,7 @@ Open the file picker that allows the user to select one or more files.
 | **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |
 | **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |
 | **`size`**     | <code>number</code> | The size of the file in bytes.                                                                                       |
+| **`blob`**     | <code>Blob</code>   | The Blob instance of the file. Only available on Web.                                                                |
 
 
 #### PickFilesOptions
