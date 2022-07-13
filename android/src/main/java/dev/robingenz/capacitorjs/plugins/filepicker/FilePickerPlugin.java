@@ -14,6 +14,7 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.json.JSONException;
 
@@ -58,6 +59,7 @@ public class FilePickerPlugin extends Plugin {
         }
         try {
             List<String> typesList = types.toList();
+            Collections.replaceAll(typesList, "text/csv", "text/comma-separated-values");
             return typesList.toArray(new String[0]);
         } catch (JSONException exception) {
             Logger.error("parseTypesOption failed.", exception);
