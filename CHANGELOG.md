@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/robingenz/capacitor-file-picker/compare/v0.3.0...v0.3.1) (2022-07-13)
+
+
+### Features
+
+* **web:** provide `Blob` instance ([#37](https://github.com/robingenz/capacitor-file-picker/issues/37)) ([e84bcf9](https://github.com/robingenz/capacitor-file-picker/commit/e84bcf9a3c9f6cb309d18c36e1fcf918f8ec822a))
+
+
+### Bug Fixes
+
+* **android:** map `text/csv` to `text/comma-separated-values` ([#36](https://github.com/robingenz/capacitor-file-picker/issues/36)) ([87b82f6](https://github.com/robingenz/capacitor-file-picker/commit/87b82f67518189041c7ea237eb6717f94c67d320))
+
 ## [0.3.0](https://github.com/robingenz/capacitor-file-picker/compare/v0.2.3...v0.3.0) (2022-02-23)
 
 
