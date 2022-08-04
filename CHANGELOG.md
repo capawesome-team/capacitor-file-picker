@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.3.1...v0.4.0) (2022-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* This plugin was renamed to `@capawesome/capacitor-file-picker`. Please install the new npm package and run `npx cap sync`.
+* This plugin now only supports Capacitor 4.
+
+### Features
+
+* update to Capacitor 4 ([#39](https://github.com/capawesome-team/capacitor-file-picker/issues/39)) ([ca8caf5](https://github.com/capawesome-team/capacitor-file-picker/commit/ca8caf53fcac91fe74b6e25e2044eb0aaf40c42c))
+
+
+* rename to `@capawesome/capacitor-file-picker` ([#40](https://github.com/capawesome-team/capacitor-file-picker/issues/40)) ([d7d0bbe](https://github.com/capawesome-team/capacitor-file-picker/commit/d7d0bbe515a54169c3ef07c3832febd4773e2204))
+
 ### [0.3.1](https://github.com/robingenz/capacitor-file-picker/compare/v0.3.0...v0.3.1) (2022-07-13)
 
 
