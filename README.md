@@ -1,20 +1,18 @@
 <p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
 <h3 align="center">File Picker</h3>
-<p align="center"><strong><code>@robingenz/capacitor-file-picker</code></strong></p>
+<p align="center"><strong><code>@capawesome/capacitor-file-picker</code></strong></p>
 <p align="center">
   Capacitor plugin that allows the user to select a file.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
-  <a href="https://github.com/robingenz/capacitor-file-picker/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/robingenz/capacitor-file-picker/CI/main?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@robingenz/capacitor-file-picker"><img src="https://img.shields.io/npm/l/@robingenz/capacitor-file-picker?style=flat-square" /></a>
+  <a href="https://github.com/capawesome-team/capacitor-file-picker/actions?query=workflow%3A%22CI%22"><img src="https://img.shields.io/github/workflow/status/capawesome-team/capacitor-file-picker/CI/main?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capawesome/capacitor-file-picker"><img src="https://img.shields.io/npm/l/@capawesome/capacitor-file-picker?style=flat-square" /></a>
 <br>
-  <a href="https://www.npmjs.com/package/@robingenz/capacitor-file-picker"><img src="https://img.shields.io/npm/dw/@robingenz/capacitor-file-picker?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@robingenz/capacitor-file-picker"><img src="https://img.shields.io/npm/v/@robingenz/capacitor-file-picker?style=flat-square" /></a>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-1-orange?style=flat-square" /></a>
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+  <a href="https://www.npmjs.com/package/@capawesome/capacitor-file-picker"><img src="https://img.shields.io/npm/dw/@capawesome/capacitor-file-picker?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capawesome/capacitor-file-picker"><img src="https://img.shields.io/npm/v/@capawesome/capacitor-file-picker?style=flat-square" /></a>
+  <a href="https://github.com/capawesome-team"><img src="https://img.shields.io/badge/part%20of-capawesome-%234f46e5?style=flat-square" /></a>
 </p>
 
 ## Maintainers
@@ -23,10 +21,18 @@
 | ---------- | ----------------------------------------- | --------------------------------------------- |
 | Robin Genz | [robingenz](https://github.com/robingenz) | [@robin_genz](https://twitter.com/robin_genz) |
 
+## Sponsors
+
+This is an MIT-licensed open source project.
+It can grow thanks to the support by these awesome people.
+If you'd like to join them, please read more [here](https://github.com/sponsors/capawesome-team).
+
+<!-- sponsors --><!-- sponsors -->
+
 ## Installation
 
 ```bash
-npm install @robingenz/capacitor-file-picker
+npm install @capawesome/capacitor-file-picker
 npx cap sync
 ```
 
@@ -41,7 +47,7 @@ A working example can be found here: [robingenz/capacitor-plugin-demo](https://g
 ## Usage
 
 ```typescript
-import { FilePicker } from '@robingenz/capacitor-file-picker';
+import { FilePicker } from '@capawesome/capacitor-file-picker';
 
 const pickFiles = async () => {
   const result = await FilePicker.pickFiles({
@@ -127,8 +133,8 @@ Open the file picker that allows the user to select one or more files.
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/robingenz/capacitor-file-picker/blob/main/CHANGELOG.md).
+See [CHANGELOG.md](https://github.com/capawesome-team/capacitor-file-picker/blob/main/CHANGELOG.md).
 
 ## License
 
-See [LICENSE](https://github.com/robingenz/capacitor-file-picker/blob/main/LICENSE).
+See [LICENSE](https://github.com/capawesome-team/capacitor-file-picker/blob/main/LICENSE).
