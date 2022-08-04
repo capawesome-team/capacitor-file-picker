@@ -1,3 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.robingenz.capacitorjs.plugins.filepicker">
+    package="io.capawesome.capacitorjs.plugins.filepicker">
 </manifest>

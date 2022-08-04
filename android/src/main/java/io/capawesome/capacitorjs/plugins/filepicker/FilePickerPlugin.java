@@ -1,4 +1,4 @@
-package dev.robingenz.capacitorjs.plugins.filepicker;
+package io.capawesome.capacitorjs.plugins.filepicker;
 
 import android.app.Activity;
 import android.content.Intent;
