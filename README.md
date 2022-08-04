@@ -74,8 +74,8 @@ const appendFileToFormData = async () => {
 
 <docgen-index>
 
-- [`pickFiles(...)`](#pickfiles)
-- [Interfaces](#interfaces)
+* [`pickFiles(...)`](#pickfiles)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -96,15 +96,18 @@ Open the file picker that allows the user to select one or more files.
 
 **Returns:** <code>Promise&lt;<a href="#pickfilesresult">PickFilesResult</a>&gt;</code>
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### PickFilesResult
 
 | Prop        | Type                |
 | ----------- | ------------------- |
 | **`files`** | <code>File[]</code> |
+
 
 #### File
 
@@ -116,6 +119,7 @@ Open the file picker that allows the user to select one or more files.
 | **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |
 | **`size`**     | <code>number</code> | The size of the file in bytes.                                                                                       |
 | **`blob`**     | <code>Blob</code>   | The Blob instance of the file. Only available on Web.                                                                |
+
 
 #### PickFilesOptions
 
