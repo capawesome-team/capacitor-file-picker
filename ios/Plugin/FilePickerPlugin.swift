@@ -43,7 +43,7 @@ public class FilePickerPlugin: CAPPlugin {
         guard let savedCall = savedCall else {
             return
         }
-        let readData = savedCall.getBool("readData", true)
+        let readData = savedCall.getBool("readData", false)
         guard let urls = urls else {
             savedCall.reject(errorPickFileCanceled)
             return
