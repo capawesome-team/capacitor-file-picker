@@ -26,7 +26,7 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
         size: this.getSizeFromUrl(pickedFile),
         blob: pickedFile,
       };
-      if (options?.readData !== false) {
+      if (options?.readData) {
         file.data = await this.getDataFromFile(pickedFile);
       }
       result.files.push(file);

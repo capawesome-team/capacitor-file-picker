@@ -72,7 +72,7 @@ public class FilePickerPlugin extends Plugin {
         if (call == null) {
             return;
         }
-        boolean readData = call.getBoolean("readData", true);
+        boolean readData = call.getBoolean("readData", false);
         int resultCode = result.getResultCode();
         switch (resultCode) {
             case Activity.RESULT_OK:
