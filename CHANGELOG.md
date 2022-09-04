@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.4.0...v0.5.0) (2022-09-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* set default value of `readData` to `false` (#43)
+
+* set default value of `readData` to `false` ([#43](https://github.com/capawesome-team/capacitor-file-picker/issues/43)) ([6100f00](https://github.com/capawesome-team/capacitor-file-picker/commit/6100f0046328c6e395cf120d2ce4fca3ce586355))
+
 ## [0.4.0](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.3.1...v0.4.0) (2022-08-04)
 
 
