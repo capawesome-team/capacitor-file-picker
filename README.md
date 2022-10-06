@@ -254,6 +254,7 @@ Only available on Android and iOS.
 
 #### PickFilesOptions
 
+<<<<<<< HEAD
 | Prop           | Type                  | Description                                                                                                                                                                                                                       | Default            |
 | -------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. |                    |
@@ -300,6 +301,14 @@ Only available on Android and iOS.
 #### PickVideosResult
 
 <code><a href="#pickmediaresult">PickMediaResult</a></code>
+=======
+| Prop           | Type                  | Description                                                                                                                                                                                                                                                                   |
+| -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. Example: `['image/png', 'application/pdf']` |
+| **`customExtensions`** | <code>string[]</code> | List of custom extensions. Necessary in iOS since the mimetype alone is not enought Example: `['cs2']`                                                                                                                                                                        |
+| **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected. Default: `false`                                                                                                                                                                                                                      |
+| **`readData`** | <code>boolean</code>  | Whether to read the file data. Default: `false`                                                                                                                                                                                                                               |
+>>>>>>> bd956c9 (add customExtensions picking capacity for iOS)
 
 </docgen-api>
 

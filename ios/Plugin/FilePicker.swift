@@ -4,6 +4,7 @@ import Photos
 import Capacitor
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 @objc public class FilePicker: NSObject {
     private var plugin: FilePickerPlugin?
@@ -94,6 +95,17 @@ import MobileCoreServices
                 picker.modalPresentationStyle = .fullScreen
                 self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
             }
+        }
+    }
+    
+    @available(iOS 14.0, *)
+    public func updatedOpenDocumentPicker(multiple: Bool, documentTypes: [UTType]) {
+        DispatchQueue.main.async {
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: documentTypes)
+            documentPicker.delegate = self
+            documentPicker.allowsMultipleSelection = multiple
+            documentPicker.modalPresentationStyle = .fullScreen
+            self.plugin?.bridge?.viewController?.present(documentPicker, animated: true, completion: nil)
         }
     }
 

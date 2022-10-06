@@ -2,6 +2,7 @@ import Foundation
 import Capacitor
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 /**
  * Please read the Capacitor iOS Plugin Development Guide
@@ -53,10 +54,20 @@ public class FilePickerPlugin: CAPPlugin {
 
         let multiple = call.getBool("multiple", false)
         let types = call.getArray("types", String.self) ?? []
-        let parsedTypes = parseTypesOption(types)
-        let documentTypes = parsedTypes.isEmpty ? ["public.data"] : parsedTypes
+        let fileExtensions = call.getArray("customExtensions", String.self) ?? []
+        if #available(iOS 14.0, *) {
+            let parsedTypes = newParseTypesOption(types)
+            let parsedExtensions = parseCustomExtensions(fileExtensions)
+            let concatenatedTypes = parsedTypes + parsedExtensions
+            let documentTypes = concatenatedTypes.isEmpty ? [.jpeg] : concatenatedTypes
+            implementation?.updatedOpenDocumentPicker(multiple: multiple, documentTypes: documentTypes)
+        } else {
+            // Fallback on earlier versions
+            let parsedTypes = parseTypesOption(types)
+            let documentTypes = parsedTypes.isEmpty ? ["public.data"] : parsedTypes
 
-        implementation?.openDocumentPicker(multiple: multiple, documentTypes: documentTypes)
+            implementation?.openDocumentPicker(multiple: multiple, documentTypes: documentTypes)
+        }
     }
 
     @objc func pickImages(_ call: CAPPluginCall) {
@@ -94,6 +105,30 @@ public class FilePickerPlugin: CAPPlugin {
         return parsedTypes
     }
 
+    @available(iOS 14.0, *)
+    @objc func newParseTypesOption(_ types: [String]) -> [UTType] {
+        var parsedTypes: [UTType] = []
+        for (_, type) in types.enumerated() {
+            guard let utType: UTType = UTType(mimeType: type) else {
+                continue
+            }
+            parsedTypes.append(utType)
+        }
+        return parsedTypes
+    }
+
+    @available(iOS 14.0, *)
+    @objc func parseCustomExtensions(_ extensions: [String]) -> [UTType] {
+        var parsedExtensions: [UTType] = []
+        for (_, exten) in extensions.enumerated() {
+            guard let utType: UTType = UTType(filenameExtension: exten) else {
+                continue
+            }
+            parsedExtensions.append(utType)
+        }
+        return parsedExtensions
+    }
+
     @objc func handleDocumentPickerResult(urls: [URL]?, error: String?) {
         guard let savedCall = savedCall else {
             return
@@ -107,9 +142,17 @@ public class FilePickerPlugin: CAPPlugin {
             return
         }
         let readData = savedCall.getBool("readData", false)
+        for (url) in urls {
+                  guard url.startAccessingSecurityScopedResource() else {
+                    return
+                  }
+                }
         do {
             var result = JSObject()
             let filesResult = try urls.map {(url: URL) -> JSObject in
+                guard url.startAccessingSecurityScopedResource() else {
+                    return
+                }
                 var file = JSObject()
                 if readData == true {
                     file["data"] = try implementation?.getDataFromUrl(url) ?? ""
@@ -130,6 +173,7 @@ public class FilePickerPlugin: CAPPlugin {
                 file["name"] = implementation?.getNameFromUrl(url) ?? ""
                 file["path"] = implementation?.getPathFromUrl(url) ?? ""
                 file["size"] = try implementation?.getSizeFromUrl(url) ?? -1
+                url.stopAccessingSecurityScopedResource()
                 return file
             }
             result["files"] = filesResult
