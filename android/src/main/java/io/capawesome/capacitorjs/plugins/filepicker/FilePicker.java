@@ -55,7 +55,7 @@ public class FilePicker {
         try {
             InputStream stream = bridge.getActivity().getContentResolver().openInputStream(uri);
             byte[] bytes = getBytesFromInputStream(stream);
-            return Base64.encodeToString(bytes, Base64.DEFAULT);
+            return Base64.encodeToString(bytes, Base64.NO_WRAP);
         } catch (FileNotFoundException e) {
             Log.e(TAG, "openInputStream failed.", e);
         } catch (IOException e) {
