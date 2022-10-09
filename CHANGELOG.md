@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.0...v0.5.1) (2022-10-09)
+
+
+### Bug Fixes
+
+* **android:** base64 encoded data contains line breaks ([#49](https://github.com/capawesome-team/capacitor-file-picker/issues/49)) ([953d92a](https://github.com/capawesome-team/capacitor-file-picker/commit/953d92a956c2f13d05ba6f39f39277894544a54b))
+
 ## [0.5.0](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.4.0...v0.5.0) (2022-09-04)
 
 
