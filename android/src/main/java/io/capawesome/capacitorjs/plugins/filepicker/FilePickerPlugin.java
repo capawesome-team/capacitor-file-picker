@@ -59,7 +59,9 @@ public class FilePickerPlugin extends Plugin {
         }
         try {
             List<String> typesList = types.toList();
-            Collections.replaceAll(typesList, "text/csv", "text/comma-separated-values");
+            if (typesList.contains("text/csv")) {
+                typesList.add("text/comma-separated-values");
+            }
             return typesList.toArray(new String[0]);
         } catch (JSONException exception) {
             Logger.error("parseTypesOption failed.", exception);
