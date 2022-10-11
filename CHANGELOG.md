@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.1...v0.5.2) (2022-10-11)
+
+
+### Bug Fixes
+
+* **android:** files of type `text/csv` are not selectable ([#51](https://github.com/capawesome-team/capacitor-file-picker/issues/51)) ([25ed4d9](https://github.com/capawesome-team/capacitor-file-picker/commit/25ed4d9ee0df6451392f7ede125ec0677e38d75b))
+
 ### [0.5.1](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.0...v0.5.1) (2022-10-09)
 
 
