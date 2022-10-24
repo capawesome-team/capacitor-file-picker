@@ -127,7 +127,7 @@ Open the file picker that allows the user to select one or more files.
 | -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. Example: `['image/png', 'application/pdf']` |
 | **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected. Default: `false`                                                                                                                                                                                                                      |
-| **`readData`** | <code>boolean</code>  | Whether to read the file data. Default: `true`                                                                                                                                                                                                                                |
+| **`readData`** | <code>boolean</code>  | Whether to read the file data. Default: `false`                                                                                                                                                                                                                               |
 
 </docgen-api>
 

@@ -24,7 +24,7 @@ export interface PickFilesOptions {
   /**
    * Whether to read the file data.
    *
-   * Default: `true`
+   * Default: `false`
    */
   readData?: boolean;
 }
