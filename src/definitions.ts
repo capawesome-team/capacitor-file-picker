@@ -82,7 +82,7 @@ export interface PickFilesOptions {
    */
   types?: string[];
   /**
-   * List of custom extensions. Necessary in iOS since the mimetype alone is not enought
+   * iOS only. List of custom file name extensions (without leading dot '.'). Necessary in iOS since custom mimetypes are not supported.
    *
    * Example: `['cs2']`
    */
