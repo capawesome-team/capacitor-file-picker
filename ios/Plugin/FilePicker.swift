@@ -99,7 +99,7 @@ import UniformTypeIdentifiers
     }
     
     @available(iOS 14.0, *)
-    public func updatedOpenDocumentPicker(multiple: Bool, documentTypes: [UTType]) {
+    public func openDocumentPickerWithFileExtensions(multiple: Bool, documentTypes: [UTType]) {
         DispatchQueue.main.async {
             let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: documentTypes)
             documentPicker.delegate = self

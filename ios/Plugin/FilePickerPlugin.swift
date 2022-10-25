@@ -56,11 +56,11 @@ public class FilePickerPlugin: CAPPlugin {
         let types = call.getArray("types", String.self) ?? []
         let fileExtensions = call.getArray("customExtensions", String.self) ?? []
         if #available(iOS 14.0, *) {
-            let parsedTypes = newParseTypesOption(types)
+            let parsedTypes = parseTypesOptionsToUTTypes(types)
             let parsedExtensions = parseCustomExtensions(fileExtensions)
             let concatenatedTypes = parsedTypes + parsedExtensions
-            let documentTypes = concatenatedTypes.isEmpty ? [.jpeg] : concatenatedTypes
-            implementation?.updatedOpenDocumentPicker(multiple: multiple, documentTypes: documentTypes)
+            let documentTypes = concatenatedTypes.isEmpty ? [.data] : concatenatedTypes
+            implementation?.openDocumentPickerWithFileExtensions(multiple: multiple, documentTypes: documentTypes)
         } else {
             // Fallback on earlier versions
             let parsedTypes = parseTypesOption(types)
@@ -106,7 +106,7 @@ public class FilePickerPlugin: CAPPlugin {
     }
 
     @available(iOS 14.0, *)
-    @objc func newParseTypesOption(_ types: [String]) -> [UTType] {
+    @objc func parseTypesOptionsToUTTypes(_ types: [String]) -> [UTType] {
         var parsedTypes: [UTType] = []
         for (_, type) in types.enumerated() {
             guard let utType: UTType = UTType(mimeType: type) else {
@@ -143,15 +143,16 @@ public class FilePickerPlugin: CAPPlugin {
         }
         let readData = savedCall.getBool("readData", false)
         for (url) in urls {
-                  guard url.startAccessingSecurityScopedResource() else {
-                    return
-                  }
-                }
+            guard url.startAccessingSecurityScopedResource() else {
+                return
+            }
+        }
         do {
             var result = JSObject()
             let filesResult = try urls.map {(url: URL) -> JSObject in
                 guard url.startAccessingSecurityScopedResource() else {
-                    return
+                    let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "File access denied"])
+                    throw error
                 }
                 var file = JSObject()
                 if readData == true {
