@@ -1,11 +1,14 @@
 package io.capawesome.capacitorjs.plugins.filepicker;
 
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import com.getcapacitor.Bridge;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -85,6 +88,52 @@ public class FilePicker {
             cursor.close();
         }
         return size;
+    }
+
+    @Nullable
+    public Long getDurationFromUri(Uri uri) {
+        if (isVideoUri(uri)) {
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(bridge.getContext(), uri);
+            String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            long duration = Long.parseLong(time);
+            retriever.release();
+            return duration;
+        }
+        return null;
+    }
+
+    @Nullable
+    public FileResolution getHeightAndWidthFromUri(Uri uri) {
+        if (isImageUri(uri)) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            try {
+                BitmapFactory.decodeStream(bridge.getContext().getContentResolver().openInputStream(uri), null, options);
+                return new FileResolution(options.outHeight, options.outWidth);
+            } catch (FileNotFoundException exception) {
+                exception.printStackTrace();
+                return null;
+            }
+        } else if (isVideoUri(uri)) {
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+            retriever.setDataSource(bridge.getContext(), uri);
+            int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
+            int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
+            retriever.release();
+            return new FileResolution(height, width);
+        }
+        return null;
+    }
+
+    private boolean isImageUri(Uri uri) {
+        String mimeType = getMimeTypeFromUri(uri);
+        return mimeType.startsWith("image");
+    }
+
+    private boolean isVideoUri(Uri uri) {
+        String mimeType = getMimeTypeFromUri(uri);
+        return mimeType.startsWith("video");
     }
 
     /**

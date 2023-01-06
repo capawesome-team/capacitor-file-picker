@@ -116,7 +116,7 @@ import MobileCoreServices
             let asset = AVAsset(url: url)
             let duration = asset.duration
             let durationTime = CMTimeGetSeconds(duration)
-            return Int(durationTime)
+            return Int(durationTime) * 1000
         }
         return nil
     }
