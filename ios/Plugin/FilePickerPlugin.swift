@@ -11,6 +11,7 @@ import MobileCoreServices
 public class FilePickerPlugin: CAPPlugin {
     public let errorPickFileCanceled = "pickFiles canceled."
     public let errorUnknown = "Unknown error occurred."
+    public let errorTemporaryCopyFailed = "An unknown error occurred while creating a temporary copy of the file."
     public let errorUnsupportedFileTypeIdentifier = "Unsupported file type identifier."
     private var implementation: FilePicker?
     private var savedCall: CAPPluginCall?

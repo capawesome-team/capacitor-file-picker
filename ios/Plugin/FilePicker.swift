@@ -149,11 +149,23 @@ import MobileCoreServices
         let mimeType = self.getMimeTypeFromUrl(url)
         return mimeType.hasPrefix("video")
     }
+
+    private func saveTemporaryFile(_ sourceUrl: URL) throws -> URL {
+        let timestamp = NSDate().timeIntervalSince1970
+        let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(timestamp)_\(sourceUrl.lastPathComponent)")
+        try FileManager.default.copyItem(at: sourceUrl, to: targetUrl)
+        return targetUrl
+    }
 }
 
 extension FilePicker: UIDocumentPickerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        plugin?.handleDocumentPickerResult(urls: urls, error: nil)
+        do {
+            let temporaryUrls = try urls.map { try saveTemporaryFile($0) }
+            plugin?.handleDocumentPickerResult(urls: temporaryUrls, error: nil)
+        } catch {
+            plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
+        }
     }
 
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -178,7 +190,12 @@ extension FilePicker: UIImagePickerControllerDelegate, UINavigationControllerDel
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true) {
             if let url = info[.mediaURL] as? URL {
-                self.plugin?.handleDocumentPickerResult(urls: [url], error: nil)
+                do {
+                    let temporaryUrl = try self.saveTemporaryFile(url)
+                    self.plugin?.handleDocumentPickerResult(urls: [temporaryUrl], error: nil)
+                } catch {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
+                }
             } else {
                 self.plugin?.handleDocumentPickerResult(urls: nil, error: nil)
             }
@@ -204,7 +221,12 @@ extension FilePicker: PHPickerViewControllerDelegate {
                     self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnknown)
                     return
                 }
-                self.plugin?.handleDocumentPickerResult(urls: [url], error: nil)
+                do {
+                    let temporaryUrl = try self.saveTemporaryFile(url)
+                    self.plugin?.handleDocumentPickerResult(urls: [temporaryUrl], error: nil)
+                } catch {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
+                }
             })
         } else if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
             result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier, completionHandler: { url, error in
@@ -216,7 +238,12 @@ extension FilePicker: PHPickerViewControllerDelegate {
                     self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnknown)
                     return
                 }
-                self.plugin?.handleDocumentPickerResult(urls: [url], error: nil)
+                do {
+                    let temporaryUrl = try self.saveTemporaryFile(url)
+                    self.plugin?.handleDocumentPickerResult(urls: [temporaryUrl], error: nil)
+                } catch {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
+                }
             })
         } else {
             self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnsupportedFileTypeIdentifier)
