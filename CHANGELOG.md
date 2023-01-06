@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.5](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.4...v0.5.5) (2023-01-06)
+
+
+### Bug Fixes
+
+* **ios:** save files in a temporary directory ([ad3f8bb](https://github.com/capawesome-team/capacitor-file-picker/commit/ad3f8bbf3a314b331a62752de58dddd1978df06f))
+
 ### [0.5.4](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.3...v0.5.4) (2023-01-06)
 
 
