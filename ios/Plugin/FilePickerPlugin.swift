@@ -88,11 +88,18 @@ public class FilePickerPlugin: CAPPlugin {
                     file["data"] = try implementation?.getDataFromUrl(url) ?? ""
                 }
                 file["mimeType"] = implementation?.getMimeTypeFromUrl(url) ?? ""
-                file["size"] = try implementation?.getSizeFromUrl(url) ?? ""
-                file["duration"] = implementation?.getDurationFromUrl(url) ?? ""
+                file["size"] = try implementation?.getSizeFromUrl(url) ?? -1
+                let duration = implementation?.getDurationFromUrl(url)
+                if let duration = duration {
+                    file["duration"] = duration
+                }
                 let (height, width) = implementation?.getHeightAndWidthFromUrl(url) ?? (nil, nil)
-                file["height"] = height ?? ""
-                file["width"] = width ?? ""
+                if let height = height {
+                    file["height"] = height
+                }
+                if let width = width {
+                    file["width"] = width
+                }
                 return file
             }
             result["files"] = filesResult
