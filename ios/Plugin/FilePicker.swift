@@ -1,4 +1,6 @@
 import Foundation
+import PhotosUI
+import Photos
 import Capacitor
 import UIKit
 import MobileCoreServices
@@ -18,6 +20,65 @@ import MobileCoreServices
             documentPicker.allowsMultipleSelection = multiple
             documentPicker.modalPresentationStyle = .fullScreen
             self.plugin?.bridge?.viewController?.present(documentPicker, animated: true, completion: nil)
+        }
+    }
+
+    public func openImagePicker(multiple: Bool) {
+        DispatchQueue.main.async {
+            if #available(iOS 14, *) {
+                var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+                configuration.selectionLimit = multiple ? 0 : 1
+                configuration.filter = .images
+                let picker = PHPickerViewController(configuration: configuration)
+                picker.delegate = self
+                picker.modalPresentationStyle = .fullScreen
+                self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
+            } else {
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.sourceType = .photoLibrary
+                picker.modalPresentationStyle = .fullScreen
+                self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
+            }
+        }
+    }
+
+    public func openMediaPicker(multiple: Bool) {
+        DispatchQueue.main.async {
+            if #available(iOS 14, *) {
+                var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+                configuration.selectionLimit = multiple ? 0 : 1
+                let picker = PHPickerViewController(configuration: configuration)
+                picker.delegate = self
+                picker.modalPresentationStyle = .fullScreen
+                self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
+            } else {
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.mediaTypes = ["public.movie", "public.image"]
+                picker.modalPresentationStyle = .fullScreen
+                self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
+            }
+        }
+    }
+
+    public func openVideoPicker(multiple: Bool) {
+        DispatchQueue.main.async {
+            if #available(iOS 14, *) {
+                var configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+                configuration.selectionLimit = multiple ? 0 : 1
+                configuration.filter = .videos
+                let picker = PHPickerViewController(configuration: configuration)
+                picker.delegate = self
+                picker.modalPresentationStyle = .fullScreen
+                self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
+            } else {
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.mediaTypes = ["public.movie"]
+                picker.modalPresentationStyle = .fullScreen
+                self.plugin?.bridge?.viewController?.present(picker, animated: true, completion: nil)
+            }
         }
     }
 
@@ -53,10 +114,74 @@ import MobileCoreServices
 
 extension FilePicker: UIDocumentPickerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        plugin?.handleDocumentPickerResult(urls: urls)
+        plugin?.handleDocumentPickerResult(urls: urls, error: nil)
     }
 
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        plugin?.handleDocumentPickerResult(urls: nil)
+        plugin?.handleDocumentPickerResult(urls: nil, error: nil)
+    }
+}
+
+extension FilePicker: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+        plugin?.handleDocumentPickerResult(urls: nil, error: nil)
+    }
+
+    public func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        plugin?.handleDocumentPickerResult(urls: nil, error: nil)
+    }
+
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        plugin?.handleDocumentPickerResult(urls: nil, error: nil)
+    }
+
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true) {
+            if let url = info[.mediaURL] as? URL {
+                self.plugin?.handleDocumentPickerResult(urls: [url], error: nil)
+            } else {
+                self.plugin?.handleDocumentPickerResult(urls: nil, error: nil)
+            }
+        }
+    }
+}
+
+@available(iOS 14, *)
+extension FilePicker: PHPickerViewControllerDelegate {
+    public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let result = results.first else {
+            self.plugin?.handleDocumentPickerResult(urls: nil, error: nil)
+            return
+        }
+        if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+            result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier, completionHandler: { url, error in
+                if let error = error {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: error.localizedDescription)
+                    return
+                }
+                guard let url = url else {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnknown)
+                    return
+                }
+                self.plugin?.handleDocumentPickerResult(urls: [url], error: nil)
+            })
+        } else if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+            result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier, completionHandler: { url, error in
+                if let error = error {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: error.localizedDescription)
+                    return
+                }
+                guard let url = url else {
+                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnknown)
+                    return
+                }
+                self.plugin?.handleDocumentPickerResult(urls: [url], error: nil)
+            })
+        } else {
+            self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnsupportedFileTypeIdentifier)
+            return
+        }
     }
 }

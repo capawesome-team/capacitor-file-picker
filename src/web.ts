@@ -5,6 +5,8 @@ import type {
   FilePickerPlugin,
   PickFilesOptions,
   PickFilesResult,
+  PickMediaOptions,
+  PickMediaResult,
 } from './definitions';
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
@@ -32,6 +34,24 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
       result.files.push(file);
     }
     return result;
+  }
+
+  public async pickImages(
+    _options?: PickMediaOptions,
+  ): Promise<PickMediaResult> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  public async pickMedia(
+    _options?: PickMediaOptions,
+  ): Promise<PickMediaResult> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  public async pickVideos(
+    _options?: PickMediaOptions,
+  ): Promise<PickMediaResult> {
+    throw this.unimplemented('Not implemented on web.');
   }
 
   private async openFilePicker(

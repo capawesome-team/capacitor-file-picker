@@ -75,7 +75,11 @@ const appendFileToFormData = async () => {
 <docgen-index>
 
 * [`pickFiles(...)`](#pickfiles)
+* [`pickImages(...)`](#pickimages)
+* [`pickMedia(...)`](#pickmedia)
+* [`pickVideos(...)`](#pickvideos)
 * [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
 
 </docgen-index>
 
@@ -95,6 +99,75 @@ Open the file picker that allows the user to select one or more files.
 | **`options`** | <code><a href="#pickfilesoptions">PickFilesOptions</a></code> |
 
 **Returns:** <code>Promise&lt;<a href="#pickfilesresult">PickFilesResult</a>&gt;</code>
+
+--------------------
+
+
+### pickImages(...)
+
+```typescript
+pickImages(options?: PickMediaOptions | undefined) => Promise<PickImagesResult>
+```
+
+Pick one or more images from the gallery.
+
+On iOS 13 and older it only allows to pick one image.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                          |
+| ------------- | ------------------------------------------------------------- |
+| **`options`** | <code><a href="#pickmediaoptions">PickMediaOptions</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#pickmediaresult">PickMediaResult</a>&gt;</code>
+
+**Since:** 0.5.3
+
+--------------------
+
+
+### pickMedia(...)
+
+```typescript
+pickMedia(options?: PickMediaOptions | undefined) => Promise<PickMediaResult>
+```
+
+Pick one or more images or videos from the gallery.
+
+On iOS 13 and older it only allows to pick one image or video.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                          |
+| ------------- | ------------------------------------------------------------- |
+| **`options`** | <code><a href="#pickmediaoptions">PickMediaOptions</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#pickmediaresult">PickMediaResult</a>&gt;</code>
+
+**Since:** 0.5.3
+
+--------------------
+
+
+### pickVideos(...)
+
+```typescript
+pickVideos(options?: PickMediaOptions | undefined) => Promise<PickVideosResult>
+```
+
+Pick one or more videos from the gallery.
+
+On iOS 13 and older it only allows to pick one video.
+
+Only available on Android and iOS.
+
+| Param         | Type                                                          |
+| ------------- | ------------------------------------------------------------- |
+| **`options`** | <code><a href="#pickmediaoptions">PickMediaOptions</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#pickmediaresult">PickMediaResult</a>&gt;</code>
+
+**Since:** 0.5.3
 
 --------------------
 
@@ -123,11 +196,49 @@ Open the file picker that allows the user to select one or more files.
 
 #### PickFilesOptions
 
-| Prop           | Type                  | Description                                                                                                                                                                                                                                                                   |
-| -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. Example: `['image/png', 'application/pdf']` |
-| **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected. Default: `false`                                                                                                                                                                                                                      |
-| **`readData`** | <code>boolean</code>  | Whether to read the file data. Default: `false`                                                                                                                                                                                                                               |
+| Prop           | Type                  | Description                                                                                                                                                                                                                       | Default            |
+| -------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. |                    |
+| **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected.                                                                                                                                                                                           | <code>false</code> |
+| **`readData`** | <code>boolean</code>  | Whether to read the file data.                                                                                                                                                                                                    | <code>false</code> |
+
+
+#### PickMediaResult
+
+| Prop        | Type                |
+| ----------- | ------------------- |
+| **`files`** | <code>File[]</code> |
+
+
+#### PickMediaOptions
+
+| Prop           | Type                 | Description                             | Default            |
+| -------------- | -------------------- | --------------------------------------- | ------------------ |
+| **`multiple`** | <code>boolean</code> | Whether multiple files may be selected. | <code>false</code> |
+| **`readData`** | <code>boolean</code> | Whether to read the file data.          | <code>false</code> |
+
+
+### Type Aliases
+
+
+#### PickImagesOptions
+
+<code><a href="#pickmediaoptions">PickMediaOptions</a></code>
+
+
+#### PickImagesResult
+
+<code><a href="#pickmediaresult">PickMediaResult</a></code>
+
+
+#### PickVideosOptions
+
+<code><a href="#pickmediaoptions">PickMediaOptions</a></code>
+
+
+#### PickVideosResult
+
+<code><a href="#pickmediaresult">PickMediaResult</a></code>
 
 </docgen-api>
 

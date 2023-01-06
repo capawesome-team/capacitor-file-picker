@@ -10,6 +10,8 @@ import MobileCoreServices
 @objc(FilePickerPlugin)
 public class FilePickerPlugin: CAPPlugin {
     public let errorPickFileCanceled = "pickFiles canceled."
+    public let errorUnknown = "Unknown error occurred."
+    public let errorUnsupportedFileTypeIdentifier = "Unsupported file type identifier."
     private var implementation: FilePicker?
     private var savedCall: CAPPluginCall?
 
@@ -28,6 +30,30 @@ public class FilePickerPlugin: CAPPlugin {
         implementation?.openDocumentPicker(multiple: multiple, documentTypes: documentTypes)
     }
 
+    @objc func pickImages(_ call: CAPPluginCall) {
+        savedCall = call
+
+        let multiple = call.getBool("multiple", false)
+
+        implementation?.openImagePicker(multiple: multiple)
+    }
+
+    @objc func pickMedia(_ call: CAPPluginCall) {
+        savedCall = call
+
+        let multiple = call.getBool("multiple", false)
+
+        implementation?.openMediaPicker(multiple: multiple)
+    }
+
+    @objc func pickVideos(_ call: CAPPluginCall) {
+        savedCall = call
+
+        let multiple = call.getBool("multiple", false)
+
+        implementation?.openVideoPicker(multiple: multiple)
+    }
+
     @objc func parseTypesOption(_ types: [String]) -> [String] {
         var parsedTypes: [String] = []
         for (_, type) in types.enumerated() {
@@ -39,8 +65,12 @@ public class FilePickerPlugin: CAPPlugin {
         return parsedTypes
     }
 
-    @objc func handleDocumentPickerResult(urls: [URL]?) {
+    @objc func handleDocumentPickerResult(urls: [URL]?, error: String?) {
         guard let savedCall = savedCall else {
+            return
+        }
+        if let error = error {
+            savedCall.reject(error)
             return
         }
         let readData = savedCall.getBool("readData", false)
