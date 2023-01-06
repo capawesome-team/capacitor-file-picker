@@ -89,6 +89,10 @@ public class FilePickerPlugin: CAPPlugin {
                 }
                 file["mimeType"] = implementation?.getMimeTypeFromUrl(url) ?? ""
                 file["size"] = try implementation?.getSizeFromUrl(url) ?? ""
+                file["duration"] = implementation?.getDurationFromUrl(url) ?? ""
+                let (height, width) = implementation?.getHeightAndWidthFromUrl(url) ?? (nil, nil)
+                file["height"] = height ?? ""
+                file["width"] = width ?? ""
                 return file
             }
             result["files"] = filesResult

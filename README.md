@@ -119,7 +119,7 @@ Only available on Android and iOS.
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#pickmediaoptions">PickMediaOptions</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pickmediaresult">PickMediaResult</a>&gt;</code>
+**Returns:** <code>Promise&lt;<a href="#pickfilesresult">PickFilesResult</a>&gt;</code>
 
 **Since:** 0.5.3
 
@@ -142,7 +142,7 @@ Only available on Android and iOS.
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#pickmediaoptions">PickMediaOptions</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pickmediaresult">PickMediaResult</a>&gt;</code>
+**Returns:** <code>Promise&lt;<a href="#pickfilesresult">PickFilesResult</a>&gt;</code>
 
 **Since:** 0.5.3
 
@@ -165,7 +165,7 @@ Only available on Android and iOS.
 | ------------- | ------------------------------------------------------------- |
 | **`options`** | <code><a href="#pickmediaoptions">PickMediaOptions</a></code> |
 
-**Returns:** <code>Promise&lt;<a href="#pickmediaresult">PickMediaResult</a>&gt;</code>
+**Returns:** <code>Promise&lt;<a href="#pickfilesresult">PickFilesResult</a>&gt;</code>
 
 **Since:** 0.5.3
 
@@ -184,14 +184,17 @@ Only available on Android and iOS.
 
 #### File
 
-| Prop           | Type                | Description                                                                                                          |
-| -------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **`path`**     | <code>string</code> | The path of the file. Only available on Android and iOS.                                                             |
-| **`name`**     | <code>string</code> | The name of the file.                                                                                                |
-| **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |
-| **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |
-| **`size`**     | <code>number</code> | The size of the file in bytes.                                                                                       |
-| **`blob`**     | <code>Blob</code>   | The Blob instance of the file. Only available on Web.                                                                |
+| Prop           | Type                | Description                                                                                                          | Since |
+| -------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------- | ----- |
+| **`blob`**     | <code>Blob</code>   | The Blob instance of the file. Only available on Web.                                                                |       |
+| **`data`**     | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |       |
+| **`duration`** | <code>number</code> | The duration of the video in milliseconds. Only available on Android and iOS.                                        | 0.5.3 |
+| **`height`**   | <code>number</code> | The height of the image or video in pixels. Only available on Android and iOS.                                       | 0.5.3 |
+| **`mimeType`** | <code>string</code> | The mime type of the file.                                                                                           |       |
+| **`name`**     | <code>string</code> | The name of the file.                                                                                                |       |
+| **`path`**     | <code>string</code> | The path of the file. Only available on Android and iOS.                                                             |       |
+| **`size`**     | <code>number</code> | The size of the file in bytes.                                                                                       |       |
+| **`width`**    | <code>number</code> | The width of the image or video in pixels. Only available on Android and iOS.                                        | 0.5.3 |
 
 
 #### PickFilesOptions
@@ -201,13 +204,6 @@ Only available on Android and iOS.
 | **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. |                    |
 | **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected.                                                                                                                                                                                           | <code>false</code> |
 | **`readData`** | <code>boolean</code>  | Whether to read the file data.                                                                                                                                                                                                    | <code>false</code> |
-
-
-#### PickMediaResult
-
-| Prop        | Type                |
-| ----------- | ------------------- |
-| **`files`** | <code>File[]</code> |
 
 
 #### PickMediaOptions
@@ -221,6 +217,11 @@ Only available on Android and iOS.
 ### Type Aliases
 
 
+#### PickedFile
+
+<code><a href="#file">File</a></code>
+
+
 #### PickImagesOptions
 
 <code><a href="#pickmediaoptions">PickMediaOptions</a></code>
@@ -229,6 +230,11 @@ Only available on Android and iOS.
 #### PickImagesResult
 
 <code><a href="#pickmediaresult">PickMediaResult</a></code>
+
+
+#### PickMediaResult
+
+<code><a href="#pickfilesresult">PickFilesResult</a></code>
 
 
 #### PickVideosOptions

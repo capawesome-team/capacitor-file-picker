@@ -110,6 +110,45 @@ import MobileCoreServices
         let values = try url.resourceValues(forKeys: [.fileSizeKey])
         return values.fileSize ?? 0
     }
+
+    public func getDurationFromUrl(_ url: URL) -> Int? {
+        if isVideoUrl(url) {
+            let asset = AVAsset(url: url)
+            let duration = asset.duration
+            let durationTime = CMTimeGetSeconds(duration)
+            return Int(durationTime)
+        }
+        return nil
+    }
+
+    public func getHeightAndWidthFromUrl(_ url: URL) -> (Int?, Int?) {
+        if isImageUrl(url) {
+            if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
+                if let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary? {
+                    let width = imageProperties[kCGImagePropertyPixelWidth] as! Int
+                    let height = imageProperties[kCGImagePropertyPixelHeight] as! Int
+                    return (height, width)
+                }
+            }
+        } else if isVideoUrl(url) {
+            guard let track = AVURLAsset(url: url).tracks(withMediaType: AVMediaType.video).first else { return (nil, nil) }
+            let size = track.naturalSize.applying(track.preferredTransform)
+            let height = abs(Int(size.height))
+            let width = abs(Int(size.width))
+            return (height, width)
+        }
+        return (nil, nil)
+    }
+
+    private func isImageUrl(_ url: URL) -> Bool {
+        let mimeType = self.getMimeTypeFromUrl(url)
+        return mimeType.hasPrefix("image")
+    }
+
+    private func isVideoUrl(_ url: URL) -> Bool {
+        let mimeType = self.getMimeTypeFromUrl(url)
+        return mimeType.hasPrefix("video")
+    }
 }
 
 extension FilePicker: UIDocumentPickerDelegate {
