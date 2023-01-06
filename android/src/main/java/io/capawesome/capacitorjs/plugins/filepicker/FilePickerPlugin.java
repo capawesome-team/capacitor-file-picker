@@ -13,6 +13,7 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -153,6 +154,12 @@ public class FilePickerPlugin extends Plugin {
             }
             fileResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
             fileResult.put("size", implementation.getSizeFromUri(uri));
+            fileResult.put("duration", implementation.getDurationFromUri(uri));
+            FileResolution resolution = implementation.getHeightAndWidthFromUri(uri);
+            if (resolution != null) {
+                fileResult.put("height", resolution.height);
+                fileResult.put("width", resolution.width);
+            }
             filesResultList.add(fileResult);
         }
         callResult.put("files", JSArray.from(filesResultList.toArray()));

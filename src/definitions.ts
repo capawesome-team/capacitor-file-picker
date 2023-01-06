@@ -60,20 +60,24 @@ export interface PickFilesOptions {
 }
 
 export interface PickFilesResult {
-  files: File[];
+  files: PickedFile[];
 }
 
+/**
+ * @since 0.5.3
+ */
+export type PickedFile = File;
+
+/**
+ * @deprecated Use `PickedFile` instead.
+ */
 export interface File {
   /**
-   * The path of the file.
+   * The Blob instance of the file.
    *
-   * Only available on Android and iOS.
+   * Only available on Web.
    */
-  path?: string;
-  /**
-   * The name of the file.
-   */
-  name: string;
+  blob?: Blob;
   /**
    * The Base64 string representation of the data contained in the file.
    *
@@ -81,19 +85,47 @@ export interface File {
    */
   data?: string;
   /**
+   * The duration of the video in milliseconds.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 0.5.3
+   */
+  duration?: number;
+  /**
+   * The height of the image or video in pixels.
+   *
+   * Only available on Android and iOS.
+   *
+   * @since 0.5.3
+   */
+  height?: number;
+  /**
    * The mime type of the file.
    */
   mimeType: string;
+  /**
+   * The name of the file.
+   */
+  name: string;
+  /**
+   * The path of the file.
+   *
+   * Only available on Android and iOS.
+   */
+  path?: string;
   /**
    * The size of the file in bytes.
    */
   size: number;
   /**
-   * The Blob instance of the file.
+   * The width of the image or video in pixels.
    *
-   * Only available on Web.
+   * Only available on Android and iOS.
+   *
+   * @since 0.5.3
    */
-  blob?: Blob;
+  width?: number;
 }
 
 /**
@@ -117,9 +149,7 @@ export interface PickMediaOptions {
 /**
  * @since 0.5.3
  */
-export interface PickMediaResult {
-  files: File[];
-}
+export type PickMediaResult = PickFilesResult;
 
 /**
  * @since 0.5.3
@@ -129,12 +159,12 @@ export type PickImagesOptions = PickMediaOptions;
 /**
  * @since 0.5.3
  */
-export type PickVideosOptions = PickMediaOptions;
+export type PickImagesResult = PickMediaResult;
 
 /**
  * @since 0.5.3
  */
-export type PickImagesResult = PickMediaResult;
+export type PickVideosOptions = PickMediaOptions;
 
 /**
  * @since 0.5.3
