@@ -47,7 +47,44 @@ public class FilePickerPlugin extends Plugin {
             }
         }
 
-        intent = Intent.createChooser(intent, "Choose a file");
+        startActivityForResult(call, intent, "pickFilesResult");
+    }
+
+    @PluginMethod
+    public void pickImages(PluginCall call) {
+        boolean multiple = call.getBoolean("multiple", false);
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+        intent.setType("image/*");
+        intent.putExtra("multi-pick", multiple);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "image/*" });
+
+        startActivityForResult(call, intent, "pickFilesResult");
+    }
+
+    @PluginMethod
+    public void pickMedia(PluginCall call) {
+        boolean multiple = call.getBoolean("multiple", false);
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+        intent.setType("*/*");
+        intent.putExtra("multi-pick", multiple);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "image/*", "video/*" });
+
+        startActivityForResult(call, intent, "pickFilesResult");
+    }
+
+    @PluginMethod
+    public void pickVideos(PluginCall call) {
+        boolean multiple = call.getBoolean("multiple", false);
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+        intent.setType("video/*");
+        intent.putExtra("multi-pick", multiple);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "video/*" });
 
         startActivityForResult(call, intent, "pickFilesResult");
     }
