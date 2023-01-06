@@ -125,8 +125,8 @@ import MobileCoreServices
         if isImageUrl(url) {
             if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
                 if let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary? {
-                    let width = imageProperties[kCGImagePropertyPixelWidth] as! Int
-                    let height = imageProperties[kCGImagePropertyPixelHeight] as! Int
+                    let width = imageProperties[kCGImagePropertyPixelWidth] as? Int
+                    let height = imageProperties[kCGImagePropertyPixelHeight] as? Int
                     return (height, width)
                 }
             }
