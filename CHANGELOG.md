@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.3...v0.5.4) (2023-01-06)
+
+
+### Bug Fixes
+
+* wrong data type was returned for `duration`, `height` and `width` ([7a42c13](https://github.com/capawesome-team/capacitor-file-picker/commit/7a42c135275dd5a86b719e596fe083470b913552))
+
 ### [0.5.3](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.2...v0.5.3) (2023-01-06)
 
 
