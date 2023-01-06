@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.2...v0.5.3) (2023-01-06)
+
+
+### Features
+
+* add methods `pickImages`, `pickMedia` and `pickVideos` ([#62](https://github.com/capawesome-team/capacitor-file-picker/issues/62)) ([b7c1381](https://github.com/capawesome-team/capacitor-file-picker/commit/b7c13819053c60a02f3fbbb8a8f1dda14b23d2f7))
+* return `duration`, `width` and `height` properties ([#63](https://github.com/capawesome-team/capacitor-file-picker/issues/63)) ([cb7e4ef](https://github.com/capawesome-team/capacitor-file-picker/commit/cb7e4ef8d060d3544ffdca4b342e981a6d21f69d))
+
 ### [0.5.2](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.1...v0.5.2) (2022-10-11)
 
 
