@@ -120,11 +120,7 @@ public class FilePicker {
             retriever.setDataSource(bridge.getContext(), uri);
             int width = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
             int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
-            try {
-                retriever.release();
-            } catch (Exception e) {
-                Log.e(TAG, "MediaMetadataRetriever.release() failed.", e);
-            }
+            retriever.release();
             return new FileResolution(height, width);
         }
         return null;
