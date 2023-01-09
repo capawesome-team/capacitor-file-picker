@@ -97,11 +97,7 @@ public class FilePicker {
             retriever.setDataSource(bridge.getContext(), uri);
             String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
             long duration = Long.parseLong(time);
-            try {
-                retriever.release();
-            } catch (IOException e) {
-                Log.e(TAG, "MediaMetadataRetriever.release() failed.", e);
-            }
+            retriever.release();
             return duration;
         }
         return null;
@@ -126,7 +122,7 @@ public class FilePicker {
             int height = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
             try {
                 retriever.release();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 Log.e(TAG, "MediaMetadataRetriever.release() failed.", e);
             }
             return new FileResolution(height, width);

@@ -3,6 +3,7 @@ package io.capawesome.capacitorjs.plugins.filepicker;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.Nullable;
 import com.getcapacitor.JSArray;
@@ -20,6 +21,8 @@ import org.json.JSONException;
 @CapacitorPlugin(name = "FilePicker")
 public class FilePickerPlugin extends Plugin {
 
+    public static final String TAG = "FilePickerPlugin";
+
     public static final String ERROR_PICK_FILE_FAILED = "pickFiles failed.";
     public static final String ERROR_PICK_FILE_CANCELED = "pickFiles canceled.";
     private FilePicker implementation;
@@ -30,62 +33,86 @@ public class FilePickerPlugin extends Plugin {
 
     @PluginMethod
     public void pickFiles(PluginCall call) {
-        JSArray types = call.getArray("types", null);
-        boolean multiple = call.getBoolean("multiple", false);
-        String[] parsedTypes = parseTypesOption(types);
+        try {
+            JSArray types = call.getArray("types", null);
+            boolean multiple = call.getBoolean("multiple", false);
+            String[] parsedTypes = parseTypesOption(types);
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
-        if (multiple == false) {
-            if (parsedTypes == null || parsedTypes.length < 1) {
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, "*/*");
-            } else {
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, parsedTypes);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+            if (multiple == false) {
+                if (parsedTypes == null || parsedTypes.length < 1) {
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, "*/*");
+                } else {
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, parsedTypes);
+                }
             }
-        }
 
-        startActivityForResult(call, intent, "pickFilesResult");
+            startActivityForResult(call, intent, "pickFilesResult");
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
+        }
     }
 
     @PluginMethod
     public void pickImages(PluginCall call) {
-        boolean multiple = call.getBoolean("multiple", false);
+        try {
+            boolean multiple = call.getBoolean("multiple", false);
 
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
-        intent.setType("image/*");
-        intent.putExtra("multi-pick", multiple);
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "image/*" });
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+            intent.setType("image/*");
+            intent.putExtra("multi-pick", multiple);
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "image/*" });
 
-        startActivityForResult(call, intent, "pickFilesResult");
+            startActivityForResult(call, intent, "pickFilesResult");
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
+        }
     }
 
     @PluginMethod
     public void pickMedia(PluginCall call) {
-        boolean multiple = call.getBoolean("multiple", false);
+        try {
+            boolean multiple = call.getBoolean("multiple", false);
 
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
-        intent.setType("*/*");
-        intent.putExtra("multi-pick", multiple);
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "image/*", "video/*" });
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+            intent.setType("*/*");
+            intent.putExtra("multi-pick", multiple);
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "image/*", "video/*" });
 
-        startActivityForResult(call, intent, "pickFilesResult");
+            startActivityForResult(call, intent, "pickFilesResult");
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
+        }
     }
 
     @PluginMethod
     public void pickVideos(PluginCall call) {
-        boolean multiple = call.getBoolean("multiple", false);
+        try {
+            boolean multiple = call.getBoolean("multiple", false);
 
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
-        intent.setType("video/*");
-        intent.putExtra("multi-pick", multiple);
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "video/*" });
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple);
+            intent.setType("video/*");
+            intent.putExtra("multi-pick", multiple);
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] { "video/*" });
 
-        startActivityForResult(call, intent, "pickFilesResult");
+            startActivityForResult(call, intent, "pickFilesResult");
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
+        }
     }
 
     @Nullable
@@ -107,21 +134,27 @@ public class FilePickerPlugin extends Plugin {
 
     @ActivityCallback
     private void pickFilesResult(PluginCall call, ActivityResult result) {
-        if (call == null) {
-            return;
-        }
-        boolean readData = call.getBoolean("readData", false);
-        int resultCode = result.getResultCode();
-        switch (resultCode) {
-            case Activity.RESULT_OK:
-                JSObject callResult = createPickFilesResult(result.getData(), readData);
-                call.resolve(callResult);
-                break;
-            case Activity.RESULT_CANCELED:
-                call.reject(ERROR_PICK_FILE_CANCELED);
-                break;
-            default:
-                call.reject(ERROR_PICK_FILE_FAILED);
+        try {
+            if (call == null) {
+                return;
+            }
+            boolean readData = call.getBoolean("readData", false);
+            int resultCode = result.getResultCode();
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    JSObject callResult = createPickFilesResult(result.getData(), readData);
+                    call.resolve(callResult);
+                    break;
+                case Activity.RESULT_CANCELED:
+                    call.reject(ERROR_PICK_FILE_CANCELED);
+                    break;
+                default:
+                    call.reject(ERROR_PICK_FILE_FAILED);
+            }
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
         }
     }
 
