@@ -13,6 +13,8 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -106,7 +108,7 @@ public class FilePickerPlugin extends Plugin {
     }
 
     @ActivityCallback
-    private void pickFilesResult(PluginCall call, ActivityResult result) {
+    private void pickFilesResult(PluginCall call, ActivityResult result) throws IOException {
         if (call == null) {
             return;
         }
@@ -125,7 +127,7 @@ public class FilePickerPlugin extends Plugin {
         }
     }
 
-    private JSObject createPickFilesResult(@Nullable Intent data, boolean readData) {
+    private JSObject createPickFilesResult(@Nullable Intent data, boolean readData) throws IOException {
         JSObject callResult = new JSObject();
         List<JSObject> filesResultList = new ArrayList<>();
         if (data == null) {

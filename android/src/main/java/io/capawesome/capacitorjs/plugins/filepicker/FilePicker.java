@@ -91,7 +91,7 @@ public class FilePicker {
     }
 
     @Nullable
-    public Long getDurationFromUri(Uri uri) {
+    public Long getDurationFromUri(Uri uri) throws IOException {
         if (isVideoUri(uri)) {
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
             retriever.setDataSource(bridge.getContext(), uri);
@@ -104,7 +104,7 @@ public class FilePicker {
     }
 
     @Nullable
-    public FileResolution getHeightAndWidthFromUri(Uri uri) {
+    public FileResolution getHeightAndWidthFromUri(Uri uri) throws IOException {
         if (isImageUri(uri)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
