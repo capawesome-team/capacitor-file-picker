@@ -56,6 +56,24 @@ const pickFiles = async () => {
   });
 };
 
+const pickImages = async () => {
+  const result = await FilePicker.pickImages({
+    multiple: true,
+  });
+};
+
+const pickMedia = async () => {
+  const result = await FilePicker.pickMedia({
+    multiple: true,
+  });
+};
+
+const pickVideos = async () => {
+  const result = await FilePicker.pickVideos({
+    multiple: true,
+  });
+};
+
 const appendFileToFormData = async () => {
   const result = await FilePicker.pickFiles();
   const file = result.files[0];
