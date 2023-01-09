@@ -207,47 +207,69 @@ extension FilePicker: UIImagePickerControllerDelegate, UINavigationControllerDel
 extension FilePicker: PHPickerViewControllerDelegate {
     public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
-        guard let result = results.first else {
+        if results.first == nil {
             self.plugin?.handleDocumentPickerResult(urls: nil, error: nil)
             return
         }
-        if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
-            result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier, completionHandler: { url, error in
-                if let error = error {
-                    self.plugin?.handleDocumentPickerResult(urls: nil, error: error.localizedDescription)
-                    return
-                }
-                guard let url = url else {
-                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnknown)
-                    return
-                }
-                do {
-                    let temporaryUrl = try self.saveTemporaryFile(url)
-                    self.plugin?.handleDocumentPickerResult(urls: [temporaryUrl], error: nil)
-                } catch {
-                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
-                }
-            })
-        } else if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-            result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier, completionHandler: { url, error in
-                if let error = error {
-                    self.plugin?.handleDocumentPickerResult(urls: nil, error: error.localizedDescription)
-                    return
-                }
-                guard let url = url else {
-                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnknown)
-                    return
-                }
-                do {
-                    let temporaryUrl = try self.saveTemporaryFile(url)
-                    self.plugin?.handleDocumentPickerResult(urls: [temporaryUrl], error: nil)
-                } catch {
-                    self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
-                }
-            })
-        } else {
-            self.plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorUnsupportedFileTypeIdentifier)
-            return
+        var temporaryUrls: [URL] = []
+        var errorMessage: String? = nil
+        let dispatchGroup = DispatchGroup()
+        for result in results {
+            if errorMessage != nil {
+                break
+            }
+            if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.movie.identifier) {
+                dispatchGroup.enter()
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier, completionHandler: { url, error in
+                    defer {
+                        dispatchGroup.leave()
+                    }
+                    if let error = error {
+                        errorMessage = error.localizedDescription
+                        return
+                    }
+                    guard let url = url else {
+                        errorMessage = self.plugin?.errorUnknown
+                        return
+                    }
+                    do {
+                        let temporaryUrl = try self.saveTemporaryFile(url)
+                        temporaryUrls.append(temporaryUrl)
+                    } catch {
+                        errorMessage = self.plugin?.errorTemporaryCopyFailed
+                    }
+                })
+            } else if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+                dispatchGroup.enter()
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier, completionHandler: { url, error in
+                    defer {
+                        dispatchGroup.leave()
+                    }
+                    if let error = error {
+                        errorMessage = error.localizedDescription
+                        return
+                    }
+                    guard let url = url else {
+                        errorMessage = self.plugin?.errorUnknown
+                        return
+                    }
+                    do {
+                        let temporaryUrl = try self.saveTemporaryFile(url)
+                        temporaryUrls.append(temporaryUrl)
+                    } catch {
+                        errorMessage = self.plugin?.errorTemporaryCopyFailed
+                    }
+                })
+            } else {
+                errorMessage = self.plugin?.errorUnsupportedFileTypeIdentifier
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            if let errorMessage = errorMessage {
+                self.plugin?.handleDocumentPickerResult(urls: nil, error: errorMessage)
+                return
+            }
+            self.plugin?.handleDocumentPickerResult(urls: temporaryUrls, error: nil)
         }
     }
 }
