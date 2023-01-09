@@ -212,7 +212,7 @@ extension FilePicker: PHPickerViewControllerDelegate {
             return
         }
         var temporaryUrls: [URL] = []
-        var errorMessage: String? = nil
+        var errorMessage: String?
         let dispatchGroup = DispatchGroup()
         for result in results {
             if errorMessage != nil {
