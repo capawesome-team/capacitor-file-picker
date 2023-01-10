@@ -1,5 +1,15 @@
 export interface FilePickerPlugin {
   /**
+   * Pick a directory.
+   * 
+   * Returns a security-scoped URL for the directory that permits your app to access content outside its container.
+   * 
+   * Only available on Android and iOS.
+   * 
+   * @since 0.5.7
+   */
+  pickDirectory(): Promise<PickDirectoryResult>;
+  /**
    * Open the file picker that allows the user to select one or more files.
    */
   pickFiles(options?: PickFilesOptions): Promise<PickFilesResult>;
@@ -33,6 +43,18 @@ export interface FilePickerPlugin {
    * @since 0.5.3
    */
   pickVideos(options?: PickVideosOptions): Promise<PickVideosResult>;
+}
+
+/**
+ * @since 0.5.7
+ */
+export interface PickDirectoryResult {
+  /**
+   * The path of the directory.
+   * 
+   * @since 0.5.7
+   */
+  path: string;
 }
 
 export interface PickFilesOptions {

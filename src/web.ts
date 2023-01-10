@@ -3,6 +3,7 @@ import { WebPlugin } from '@capacitor/core';
 import type {
   File as FileModel,
   FilePickerPlugin,
+  PickDirectoryResult,
   PickFilesOptions,
   PickFilesResult,
   PickImagesOptions,
@@ -15,6 +16,10 @@ import type {
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
+
+  public async pickDirectory(): Promise<PickDirectoryResult> {
+      throw this.unimplemented('Not implemented on web.');
+  }
 
   public async pickFiles(options?: PickFilesOptions): Promise<PickFilesResult> {
     const pickedFiles = await this.openFilePicker(options);
