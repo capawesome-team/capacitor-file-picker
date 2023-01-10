@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.7](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.6...v0.5.7) (2023-01-10)
+
+
+### Bug Fixes
+
+* **android:** select files from external storage ([#67](https://github.com/capawesome-team/capacitor-file-picker/issues/67)) ([06a3030](https://github.com/capawesome-team/capacitor-file-picker/commit/06a303069a683bebe71bed2ead5d58cf87f3f148))
+* **ios:** `pickMedia`, `pickImages` and `pickVideos` do not return multiple files ([#68](https://github.com/capawesome-team/capacitor-file-picker/issues/68)) ([36e8321](https://github.com/capawesome-team/capacitor-file-picker/commit/36e8321b3bd93fcbe57d3463e40af848da3e4547))
+
 ### [0.5.6](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.5...v0.5.6) (2023-01-09)
 
 
