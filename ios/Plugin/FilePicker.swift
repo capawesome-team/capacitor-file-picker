@@ -125,9 +125,7 @@ import MobileCoreServices
         if isImageUrl(url) {
             if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
                 if let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as Dictionary? {
-                    let width = imageProperties[kCGImagePropertyPixelWidth] as? Int
-                    let height = imageProperties[kCGImagePropertyPixelHeight] as? Int
-                    return (height, width)
+                    return getHeightAndWidthFromImageProperties(imageProperties)
                 }
             }
         } else if isVideoUrl(url) {
@@ -155,6 +153,18 @@ import MobileCoreServices
         let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(timestamp)_\(sourceUrl.lastPathComponent)")
         try FileManager.default.copyItem(at: sourceUrl, to: targetUrl)
         return targetUrl
+    }
+
+    public func getHeightAndWidthFromImageProperties(_ properties: [NSObject: AnyObject]) -> (Int?, Int?) {
+        let width = properties[kCGImagePropertyPixelWidth] as? Int
+        let height = properties[kCGImagePropertyPixelHeight] as? Int
+        let orientation = properties[kCGImagePropertyOrientation] as? Int ?? UIImage.Orientation.up.rawValue
+        switch orientation {
+        case UIImage.Orientation.left.rawValue, UIImage.Orientation.right.rawValue, UIImage.Orientation.leftMirrored.rawValue, UIImage.Orientation.rightMirrored.rawValue:
+            return (width, height)
+        default:
+            return (height, width)
+        }
     }
 }
 
