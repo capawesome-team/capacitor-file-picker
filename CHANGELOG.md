@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.8](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.7...v0.5.8) (2023-01-15)
+
+
+### Bug Fixes
+
+* **ios:** return the correct height and width according to the orientation ([#75](https://github.com/capawesome-team/capacitor-file-picker/issues/75)) ([6c184c2](https://github.com/capawesome-team/capacitor-file-picker/commit/6c184c21532702c9efb5b657858eaf7ec79965c5))
+
 ### [0.5.7](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.6...v0.5.7) (2023-01-10)
 
 
