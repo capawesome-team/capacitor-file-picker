@@ -83,13 +83,9 @@ public class FilePickerPlugin: CAPPlugin {
             var result = JSObject()
             let filesResult = try urls.map {(url: URL) -> JSObject in
                 var file = JSObject()
-                file["path"] = implementation?.getPathFromUrl(url) ?? ""
-                file["name"] = implementation?.getNameFromUrl(url) ?? ""
                 if readData == true {
                     file["data"] = try implementation?.getDataFromUrl(url) ?? ""
                 }
-                file["mimeType"] = implementation?.getMimeTypeFromUrl(url) ?? ""
-                file["size"] = try implementation?.getSizeFromUrl(url) ?? -1
                 let duration = implementation?.getDurationFromUrl(url)
                 if let duration = duration {
                     file["duration"] = duration
@@ -101,6 +97,11 @@ public class FilePickerPlugin: CAPPlugin {
                 if let width = width {
                     file["width"] = width
                 }
+                file["modifiedAt"] = implementation?.getModifiedAtFromUrl(url) ?? 0
+                file["mimeType"] = implementation?.getMimeTypeFromUrl(url) ?? ""
+                file["name"] = implementation?.getNameFromUrl(url) ?? ""
+                file["path"] = implementation?.getPathFromUrl(url) ?? ""
+                file["size"] = try implementation?.getSizeFromUrl(url) ?? -1
                 return file
             }
             result["files"] = filesResult

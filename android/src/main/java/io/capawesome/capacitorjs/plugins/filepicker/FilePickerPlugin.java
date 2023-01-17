@@ -173,14 +173,13 @@ public class FilePickerPlugin extends Plugin {
         }
         for (int i = 0; i < uris.size(); i++) {
             Uri uri = uris.get(i);
+            if (uri == null) {
+                continue;
+            }
             JSObject fileResult = new JSObject();
-            fileResult.put("path", implementation.getPathFromUri(uri));
-            fileResult.put("name", implementation.getNameFromUri(uri));
             if (readData) {
                 fileResult.put("data", implementation.getDataFromUri(uri));
             }
-            fileResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
-            fileResult.put("size", implementation.getSizeFromUri(uri));
             Long duration = implementation.getDurationFromUri(uri);
             if (duration != null) {
                 fileResult.put("duration", duration);
@@ -190,6 +189,14 @@ public class FilePickerPlugin extends Plugin {
                 fileResult.put("height", resolution.height);
                 fileResult.put("width", resolution.width);
             }
+            fileResult.put("mimeType", implementation.getMimeTypeFromUri(uri));
+            Long modifiedAt = implementation.getModifiedAtFromUri(uri);
+            if (modifiedAt != null) {
+                fileResult.put("modifiedAt", modifiedAt);
+            }
+            fileResult.put("name", implementation.getNameFromUri(uri));
+            fileResult.put("path", implementation.getPathFromUri(uri));
+            fileResult.put("size", implementation.getSizeFromUri(uri));
             filesResultList.add(fileResult);
         }
         callResult.put("files", JSArray.from(filesResultList.toArray()));
