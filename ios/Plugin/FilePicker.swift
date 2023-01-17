@@ -95,11 +95,11 @@ import MobileCoreServices
         return data.base64EncodedString()
     }
 
-    public func getModifiedAtFromUrl(_ url: URL) -> String? {
+    public func getModifiedAtFromUrl(_ url: URL) -> Int? {
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             if let modifiedDateInSec = (attributes[.modificationDate] as? Date)?.timeIntervalSince1970 {
-                return String(format: "%.0f", modifiedDateInSec * 1000)
+                return Int(modifiedDateInSec) * 1000
             } else {
                 return nil
             }
@@ -163,7 +163,7 @@ import MobileCoreServices
     }
 
     private func saveTemporaryFile(_ sourceUrl: URL) throws -> URL {
-        let timestamp = NSDate().timeIntervalSince1970
+        let timestamp = Int(NSDate().timeIntervalSince1970)
         let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(timestamp)_\(sourceUrl.lastPathComponent)")
         try FileManager.default.copyItem(at: sourceUrl, to: targetUrl)
         return targetUrl
