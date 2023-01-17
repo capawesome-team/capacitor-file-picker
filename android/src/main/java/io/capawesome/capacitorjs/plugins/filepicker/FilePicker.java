@@ -4,14 +4,14 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
-import android.provider.MediaStore;
+import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.util.Base64;
-import android.util.Log;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.getcapacitor.Bridge;
+import com.getcapacitor.Logger;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,17 +25,11 @@ public class FilePicker {
         this.bridge = bridge;
     }
 
-    public String getPathFromUri(Uri uri) {
-        if (uri == null) {
-            return "";
-        }
+    public String getPathFromUri(@NonNull Uri uri) {
         return uri.toString();
     }
 
-    public String getNameFromUri(Uri uri) {
-        if (uri == null) {
-            return "";
-        }
+    public String getNameFromUri(@NonNull Uri uri) {
         String displayName = "";
         String[] projection = { OpenableColumns.DISPLAY_NAME };
         Cursor cursor = bridge.getContext().getContentResolver().query(uri, projection, null, null, null);
@@ -51,33 +45,42 @@ public class FilePicker {
         return displayName;
     }
 
-    public String getDataFromUri(Uri uri) {
-        if (uri == null) {
-            return "";
-        }
+    public String getDataFromUri(@NonNull Uri uri) {
         try {
             InputStream stream = bridge.getActivity().getContentResolver().openInputStream(uri);
             byte[] bytes = getBytesFromInputStream(stream);
             return Base64.encodeToString(bytes, Base64.NO_WRAP);
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "openInputStream failed.", e);
+            Logger.error(TAG, "openInputStream failed.", e);
         } catch (IOException e) {
-            Log.e(TAG, "getBytesFromInputStream failed.", e);
+            Logger.error(TAG, "getBytesFromInputStream failed.", e);
         }
         return "";
     }
 
-    public String getMimeTypeFromUri(Uri uri) {
-        if (uri == null) {
-            return "";
-        }
+    public String getMimeTypeFromUri(@NonNull Uri uri) {
         return bridge.getContext().getContentResolver().getType(uri);
     }
 
-    public long getSizeFromUri(Uri uri) {
-        if (uri == null) {
-            return 0;
+    @Nullable
+    public Long getModifiedAtFromUri(@NonNull Uri uri) {
+        try {
+            long modifiedAt = 0;
+            Cursor cursor = bridge.getContext().getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int columnIdx = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_LAST_MODIFIED);
+                modifiedAt = cursor.getLong(columnIdx);
+                cursor.close();
+            }
+            return modifiedAt;
+        } catch (Exception e) {
+            Logger.error(TAG, "getModifiedAtFromUri failed.", e);
+            return null;
         }
+    }
+
+    public long getSizeFromUri(@NonNull Uri uri) {
         long size = 0;
         String[] projection = { OpenableColumns.SIZE };
         Cursor cursor = bridge.getContext().getContentResolver().query(uri, projection, null, null, null);
@@ -91,7 +94,7 @@ public class FilePicker {
     }
 
     @Nullable
-    public Long getDurationFromUri(Uri uri) {
+    public Long getDurationFromUri(@NonNull Uri uri) {
         if (isVideoUri(uri)) {
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
             retriever.setDataSource(bridge.getContext(), uri);
@@ -100,7 +103,7 @@ public class FilePicker {
             try {
                 retriever.release();
             } catch (Exception e) {
-                Log.e(TAG, "MediaMetadataRetriever.release() failed.", e);
+                Logger.error(TAG, "MediaMetadataRetriever.release() failed.", e);
             }
             return duration;
         }
@@ -108,7 +111,7 @@ public class FilePicker {
     }
 
     @Nullable
-    public FileResolution getHeightAndWidthFromUri(Uri uri) {
+    public FileResolution getHeightAndWidthFromUri(@NonNull Uri uri) {
         if (isImageUri(uri)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -127,7 +130,7 @@ public class FilePicker {
             try {
                 retriever.release();
             } catch (Exception e) {
-                Log.e(TAG, "MediaMetadataRetriever.release() failed.", e);
+                Logger.error(TAG, "MediaMetadataRetriever.release() failed.", e);
             }
             return new FileResolution(height, width);
         }

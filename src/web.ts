@@ -26,11 +26,12 @@ export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
     };
     for (const pickedFile of pickedFiles) {
       const file: FileModel = {
-        path: undefined,
-        name: this.getNameFromUrl(pickedFile),
-        mimeType: this.getMimeTypeFromUrl(pickedFile),
-        size: this.getSizeFromUrl(pickedFile),
         blob: pickedFile,
+        modifiedAt: pickedFile.lastModified,
+        mimeType: this.getMimeTypeFromUrl(pickedFile),
+        name: this.getNameFromUrl(pickedFile),
+        path: undefined,
+        size: this.getSizeFromUrl(pickedFile),
       };
       if (options?.readData) {
         file.data = await this.getDataFromFile(pickedFile);

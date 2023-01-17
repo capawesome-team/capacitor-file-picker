@@ -105,6 +105,12 @@ export interface File {
    */
   mimeType: string;
   /**
+   * The last modified timestamp of the file in milliseconds.
+   *
+   * @since 0.5.9
+   */
+  modifiedAt?: number;
+  /**
    * The name of the file.
    */
   name: string;

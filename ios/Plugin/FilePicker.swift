@@ -95,6 +95,20 @@ import MobileCoreServices
         return data.base64EncodedString()
     }
 
+    public func getModifiedAtFromUrl(_ url: URL) -> String? {
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+            if let modifiedDateInSec = (attributes[.modificationDate] as? Date)?.timeIntervalSince1970 {
+                return String(format: "%.0f", modifiedDateInSec * 1000)
+            } else {
+                return nil
+            }
+        } catch let error as NSError {
+            CAPLog.print("getModifiedAtFromUrl failed.", error.localizedDescription)
+            return nil
+        }
+    }
+
     public func getMimeTypeFromUrl(_ url: URL) -> String {
         let fileExtension = url.pathExtension as CFString
         guard let extUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)?.takeUnretainedValue() else {
