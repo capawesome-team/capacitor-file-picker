@@ -185,7 +185,17 @@ import MobileCoreServices
 extension FilePicker: UIDocumentPickerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         do {
-            let temporaryUrls = try urls.map { try saveTemporaryFile($0) }
+            let temporaryUrls = try urls.map {
+                var url = $0
+                let mimeType = self.getMimeTypeFromUrl(url)
+                if mimeType == "image/heic", let heicImage = UIImage(contentsOfFile: url.path) {
+                    let jpegRepresentation = heicImage.jpegData(compressionQuality: 1.0)
+                    let jpegPath = url.path.replacingOccurrences(of: ".heic", with: ".jpeg")
+                    FileManager.default.createFile(atPath: jpegPath, contents: jpegRepresentation, attributes: nil)
+                    url = URL(string: "file://" + jpegPath) ?? url
+                }
+                return try saveTemporaryFile(url)
+            }
             plugin?.handleDocumentPickerResult(urls: temporaryUrls, error: nil)
         } catch {
             plugin?.handleDocumentPickerResult(urls: nil, error: self.plugin?.errorTemporaryCopyFailed)
