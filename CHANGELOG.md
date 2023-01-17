@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.9](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.8...v0.5.9) (2023-01-17)
+
+
+### Features
+
+* add `modifiedAt` property ([#79](https://github.com/capawesome-team/capacitor-file-picker/issues/79)) ([f9ac248](https://github.com/capawesome-team/capacitor-file-picker/commit/f9ac2482a63e2c29855d5c094ed9ff9a62c3cbe4))
+
 ### [0.5.8](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.7...v0.5.8) (2023-01-15)
 
 
