@@ -3,6 +3,7 @@ package io.capawesome.capacitorjs.plugins.filepicker;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.DocumentsContract;
 import android.util.Log;
 import androidx.activity.result.ActivityResult;
 import androidx.annotation.Nullable;
@@ -14,6 +15,8 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.ActivityCallback;
 import com.getcapacitor.annotation.CapacitorPlugin;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -23,6 +26,8 @@ public class FilePickerPlugin extends Plugin {
 
     public static final String TAG = "FilePickerPlugin";
 
+    public static final String ERROR_PICK_DIRECTORY_FAILED = "pickDirectory failed.";
+    public static final String ERROR_PICK_DIRECTORY_CANCELED = "pickDirectory canceled.";
     public static final String ERROR_PICK_FILE_FAILED = "pickFiles failed.";
     public static final String ERROR_PICK_FILE_CANCELED = "pickFiles canceled.";
     private FilePicker implementation;
@@ -32,11 +37,29 @@ public class FilePickerPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void pickDirectory(PluginCall call) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            intent.addFlags(
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                            | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                            | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+
+            startActivityForResult(call, intent, "pickDirectoryResult");
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
+        }
+    }
+
+    @PluginMethod
     public void pickFiles(PluginCall call) {
         try {
             JSArray types = call.getArray("types", null);
             boolean multiple = call.getBoolean("multiple", false);
-            String[] parsedTypes = parseTypesOption(types);
+            String[] parsedTypes = FilePickerHelper.parseTypesOption(types);
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("*/*");
@@ -111,20 +134,28 @@ public class FilePickerPlugin extends Plugin {
         }
     }
 
-    @Nullable
-    private String[] parseTypesOption(@Nullable JSArray types) {
-        if (types == null) {
-            return null;
-        }
+    @ActivityCallback
+    private void pickDirectoryResult(PluginCall call, ActivityResult result) {
         try {
-            List<String> typesList = types.toList();
-            if (typesList.contains("text/csv")) {
-                typesList.add("text/comma-separated-values");
+            if (call == null) {
+                return;
             }
-            return typesList.toArray(new String[0]);
-        } catch (JSONException exception) {
-            Logger.error("parseTypesOption failed.", exception);
-            return null;
+            int resultCode = result.getResultCode();
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    JSObject callResult = createPickDirectoryResult(result.getData());
+                    call.resolve(callResult);
+                    break;
+                case Activity.RESULT_CANCELED:
+                    call.reject(ERROR_PICK_DIRECTORY_CANCELED);
+                    break;
+                default:
+                    call.reject(ERROR_PICK_DIRECTORY_FAILED);
+            }
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            Log.e(TAG, message);
+            call.reject(message);
         }
     }
 
@@ -152,6 +183,14 @@ public class FilePickerPlugin extends Plugin {
             Log.e(TAG, message);
             call.reject(message);
         }
+    }
+
+    private JSObject createPickDirectoryResult(Intent data) {
+        Uri uri = data.getData();
+        JSObject result = new JSObject();
+        FilePickerHelper.traverseDirectoryEntries(getActivity().getContentResolver(), uri);
+        result.put("path", implementation.getPathFromUri(uri));
+        return result;
     }
 
     private JSObject createPickFilesResult(@Nullable Intent data, boolean readData) {

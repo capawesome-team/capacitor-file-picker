@@ -92,6 +92,7 @@ const appendFileToFormData = async () => {
 
 <docgen-index>
 
+* [`pickDirectory()`](#pickdirectory)
 * [`pickFiles(...)`](#pickfiles)
 * [`pickImages(...)`](#pickimages)
 * [`pickMedia(...)`](#pickmedia)
@@ -103,6 +104,25 @@ const appendFileToFormData = async () => {
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### pickDirectory()
+
+```typescript
+pickDirectory() => Promise<PickDirectoryResult>
+```
+
+Pick a directory.
+
+Returns a security-scoped URL for the directory that permits your app to access content outside its container.
+
+Only available on Android and iOS.
+
+**Returns:** <code>Promise&lt;<a href="#pickdirectoryresult">PickDirectoryResult</a>&gt;</code>
+
+**Since:** 0.5.7
+
+--------------------
+
 
 ### pickFiles(...)
 
@@ -191,6 +211,13 @@ Only available on Android and iOS.
 
 
 ### Interfaces
+
+
+#### PickDirectoryResult
+
+| Prop       | Type                | Description                | Since |
+| ---------- | ------------------- | -------------------------- | ----- |
+| **`path`** | <code>string</code> | The path of the directory. | 0.5.7 |
 
 
 #### PickFilesResult
