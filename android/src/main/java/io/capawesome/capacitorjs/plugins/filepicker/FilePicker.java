@@ -140,7 +140,7 @@ public class FilePicker {
 
     private boolean isImageUri(Uri uri) {
         String mimeType = getMimeTypeFromUri(uri);
-        if(mimeType == null){
+        if (mimeType == null) {
             return false;
         }
         return mimeType.startsWith("image");
@@ -148,7 +148,7 @@ public class FilePicker {
 
     private boolean isVideoUri(Uri uri) {
         String mimeType = getMimeTypeFromUri(uri);
-        if(mimeType == null){
+        if (mimeType == null) {
             return false;
         }
         return mimeType.startsWith("video");
