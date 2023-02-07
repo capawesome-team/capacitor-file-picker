@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.10](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.9...v0.5.10) (2023-02-07)
+
+
+### Bug Fixes
+
+* **android:** catch null pointer exception ([#87](https://github.com/capawesome-team/capacitor-file-picker/issues/87)) ([a4f1f56](https://github.com/capawesome-team/capacitor-file-picker/commit/a4f1f565fd70e8f5ea806fe90badd784f45683b0))
+
 ### [0.5.9](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.8...v0.5.9) (2023-01-17)
 
 
