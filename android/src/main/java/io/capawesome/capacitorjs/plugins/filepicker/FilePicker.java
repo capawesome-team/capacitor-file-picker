@@ -58,6 +58,7 @@ public class FilePicker {
         return "";
     }
 
+    @Nullable
     public String getMimeTypeFromUri(@NonNull Uri uri) {
         return bridge.getContext().getContentResolver().getType(uri);
     }
@@ -139,11 +140,17 @@ public class FilePicker {
 
     private boolean isImageUri(Uri uri) {
         String mimeType = getMimeTypeFromUri(uri);
+        if(mimeType == null){
+            return false;
+        }
         return mimeType.startsWith("image");
     }
 
     private boolean isVideoUri(Uri uri) {
         String mimeType = getMimeTypeFromUri(uri);
+        if(mimeType == null){
+            return false;
+        }
         return mimeType.startsWith("video");
     }
 
