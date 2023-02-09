@@ -206,7 +206,7 @@ Only available on Android and iOS.
 | ---------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------- | ----- |
 | **`blob`**       | <code>Blob</code>   | The Blob instance of the file. Only available on Web.                                                                |       |
 | **`data`**       | <code>string</code> | The Base64 string representation of the data contained in the file. Is only provided if `readData` is set to `true`. |       |
-| **`duration`**   | <code>number</code> | The duration of the video in milliseconds. Only available on Android and iOS.                                        | 0.5.3 |
+| **`duration`**   | <code>number</code> | The duration of the video in seconds. Only available on Android and iOS.                                             | 0.5.3 |
 | **`height`**     | <code>number</code> | The height of the image or video in pixels. Only available on Android and iOS.                                       | 0.5.3 |
 | **`mimeType`**   | <code>string</code> | The mime type of the file.                                                                                           |       |
 | **`modifiedAt`** | <code>number</code> | The last modified timestamp of the file in milliseconds.                                                             | 0.5.9 |

@@ -100,13 +100,13 @@ public class FilePicker {
             MediaMetadataRetriever retriever = new MediaMetadataRetriever();
             retriever.setDataSource(bridge.getContext(), uri);
             String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            long duration = Long.parseLong(time);
+            long durationMs = Long.parseLong(time);
             try {
                 retriever.release();
             } catch (Exception e) {
                 Logger.error(TAG, "MediaMetadataRetriever.release() failed.", e);
             }
-            return duration;
+            return durationMs / 1000l;
         }
         return null;
     }
