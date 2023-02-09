@@ -9,6 +9,9 @@ import MobileCoreServices
  */
 @objc(FilePickerPlugin)
 public class FilePickerPlugin: CAPPlugin {
+    public let errorPathMissing = "path must be provided."
+    public let errorFileNotExist = "File does not exist."
+    public let errorConvertFailed = "File could not be converted."
     public let errorPickFileCanceled = "pickFiles canceled."
     public let errorUnknown = "Unknown error occurred."
     public let errorTemporaryCopyFailed = "An unknown error occurred while creating a temporary copy of the file."
@@ -18,6 +21,31 @@ public class FilePickerPlugin: CAPPlugin {
 
     override public func load() {
         self.implementation = FilePicker(self)
+    }
+    
+    @objc func convertHeicToJpeg(_ call: CAPPluginCall) {
+        guard let path = call.getString("path") else {
+            call.reject(errorPathMissing)
+            return
+        }
+        guard let url = implementation?.getFileUrlByPath(path) else {
+            call.reject(errorFileNotExist)
+            return
+        }
+        
+        do {
+            let jpegPath = try implementation?.convertHeicToJpeg(url)
+            guard let jpegPath = jpegPath else {
+                call.reject(errorConvertFailed)
+                return
+            }
+            
+            var result = JSObject()
+            result["path"] = jpegPath
+            call.resolve(result)
+        } catch let error as NSError {
+            call.reject(error.localizedDescription, nil, error)
+        }
     }
 
     @objc func pickFiles(_ call: CAPPluginCall) {
@@ -74,11 +102,11 @@ public class FilePickerPlugin: CAPPlugin {
             savedCall.reject(error)
             return
         }
-        let readData = savedCall.getBool("readData", false)
         guard let urls = urls else {
             savedCall.reject(errorPickFileCanceled)
             return
         }
+        let readData = savedCall.getBool("readData", false)
         do {
             var result = JSObject()
             let filesResult = try urls.map {(url: URL) -> JSObject in
