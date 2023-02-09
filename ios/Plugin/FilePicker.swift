@@ -99,7 +99,7 @@ import MobileCoreServices
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
             if let modifiedDateInSec = (attributes[.modificationDate] as? Date)?.timeIntervalSince1970 {
-                return Int(modifiedDateInSec) * 1000
+                return Int(modifiedDateInSec * 1000.0)
             } else {
                 return nil
             }
@@ -130,7 +130,7 @@ import MobileCoreServices
             let asset = AVAsset(url: url)
             let duration = asset.duration
             let durationTime = CMTimeGetSeconds(duration)
-            return Int(durationTime) * 1000
+            return Int(round(durationTime))
         }
         return nil
     }

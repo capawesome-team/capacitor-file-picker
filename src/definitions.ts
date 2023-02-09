@@ -85,7 +85,7 @@ export interface File {
    */
   data?: string;
   /**
-   * The duration of the video in milliseconds.
+   * The duration of the video in seconds.
    *
    * Only available on Android and iOS.
    *
