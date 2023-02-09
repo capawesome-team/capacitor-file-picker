@@ -22,7 +22,7 @@ public class FilePickerPlugin: CAPPlugin {
     override public func load() {
         self.implementation = FilePicker(self)
     }
-    
+
     @objc func convertHeicToJpeg(_ call: CAPPluginCall) {
         guard let path = call.getString("path") else {
             call.reject(errorPathMissing)
@@ -32,14 +32,14 @@ public class FilePickerPlugin: CAPPlugin {
             call.reject(errorFileNotExist)
             return
         }
-        
+
         do {
             let jpegPath = try implementation?.convertHeicToJpeg(url)
             guard let jpegPath = jpegPath else {
                 call.reject(errorConvertFailed)
                 return
             }
-            
+
             var result = JSObject()
             result["path"] = jpegPath
             call.resolve(result)

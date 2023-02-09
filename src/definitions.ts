@@ -1,12 +1,14 @@
 export interface FilePickerPlugin {
   /**
    * Convert a HEIC image to JPEG.
-   * 
+   *
    * Only available on iOS.
-   * 
+   *
    * @since 0.6.0
    */
-  convertHeicToJpeg(options: ConvertHeicToJpegOptions): Promise<ConvertHeicToJpegResult>;
+  convertHeicToJpeg(
+    options: ConvertHeicToJpegOptions,
+  ): Promise<ConvertHeicToJpegResult>;
   /**
    * Open the file picker that allows the user to select one or more files.
    */
@@ -49,7 +51,7 @@ export interface FilePickerPlugin {
 export interface ConvertHeicToJpegOptions {
   /**
    * The path of the HEIC image.
-   * 
+   *
    * @example '/path/to/image.heic'
    * @since 0.6.0
    */
@@ -62,7 +64,7 @@ export interface ConvertHeicToJpegOptions {
 export interface ConvertHeicToJpegResult {
   /**
    * The path of the converted JPEG image.
-   * 
+   *
    * @example '/path/to/image.jpeg'
    * @since 0.6.0
    */

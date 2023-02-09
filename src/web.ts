@@ -18,7 +18,9 @@ import type {
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
 
-  public async convertHeicToJpeg(_options: ConvertHeicToJpegOptions): Promise<ConvertHeicToJpegResult> {
+  public async convertHeicToJpeg(
+    _options: ConvertHeicToJpegOptions,
+  ): Promise<ConvertHeicToJpegResult> {
     throw this.unimplemented('Not implemented on web.');
   }
 

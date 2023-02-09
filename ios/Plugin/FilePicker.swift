@@ -12,7 +12,7 @@ import MobileCoreServices
         super.init()
         self.plugin = plugin
     }
-    
+
     public func convertHeicToJpeg(_ sourceUrl: URL) throws -> String? {
         let heicImage = UIImage(named: sourceUrl.path)
         guard let heicImage = heicImage else {
@@ -195,7 +195,7 @@ import MobileCoreServices
             return (height, width)
         }
     }
-    
+
     @objc public func getFileUrlByPath(_ path: String) -> URL? {
         guard let url = URL.init(string: path) else {
             return nil
@@ -206,7 +206,7 @@ import MobileCoreServices
             return nil
         }
     }
-    
+
     @objc func deleteFile(_ url: URL) throws {
         if FileManager.default.fileExists(atPath: url.path) {
             try FileManager.default.removeItem(atPath: url.path)
