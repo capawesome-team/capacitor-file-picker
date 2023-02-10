@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.10...v0.6.0) (2023-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ios:** `duration` is now returned in seconds and no longer in milliseconds.
+
+### Features
+
+* **ios:** add method `convertHeicToJpeg` ([#89](https://github.com/capawesome-team/capacitor-file-picker/issues/89)) ([aa34d9a](https://github.com/capawesome-team/capacitor-file-picker/commit/aa34d9acad2f414c6eb5297b4f60202e69f97cad))
+
+
+### Bug Fixes
+
+* **ios:** invalid values for `duration` ([#88](https://github.com/capawesome-team/capacitor-file-picker/issues/88)) ([0467a1d](https://github.com/capawesome-team/capacitor-file-picker/commit/0467a1d9918d8e6a07df7deba651992dda064458))
+
 ### [0.5.10](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.9...v0.5.10) (2023-02-07)
 
 
