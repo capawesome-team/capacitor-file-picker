@@ -1,6 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
 
 import type {
+  ConvertHeicToJpegOptions,
+  ConvertHeicToJpegResult,
   File as FileModel,
   FilePickerPlugin,
   PickFilesOptions,
@@ -15,6 +17,12 @@ import type {
 
 export class FilePickerWeb extends WebPlugin implements FilePickerPlugin {
   public readonly ERROR_PICK_FILE_CANCELED = 'pickFiles canceled.';
+
+  public async convertHeicToJpeg(
+    _options: ConvertHeicToJpegOptions,
+  ): Promise<ConvertHeicToJpegResult> {
+    throw this.unimplemented('Not implemented on web.');
+  }
 
   public async pickFiles(options?: PickFilesOptions): Promise<PickFilesResult> {
     const pickedFiles = await this.openFilePicker(options);

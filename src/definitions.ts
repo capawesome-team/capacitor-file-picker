@@ -1,5 +1,15 @@
 export interface FilePickerPlugin {
   /**
+   * Convert a HEIC image to JPEG.
+   *
+   * Only available on iOS.
+   *
+   * @since 0.6.0
+   */
+  convertHeicToJpeg(
+    options: ConvertHeicToJpegOptions,
+  ): Promise<ConvertHeicToJpegResult>;
+  /**
    * Open the file picker that allows the user to select one or more files.
    */
   pickFiles(options?: PickFilesOptions): Promise<PickFilesResult>;
@@ -33,6 +43,32 @@ export interface FilePickerPlugin {
    * @since 0.5.3
    */
   pickVideos(options?: PickVideosOptions): Promise<PickVideosResult>;
+}
+
+/**
+ * @since 0.6.0
+ */
+export interface ConvertHeicToJpegOptions {
+  /**
+   * The path of the HEIC image.
+   *
+   * @example '/path/to/image.heic'
+   * @since 0.6.0
+   */
+  path: string;
+}
+
+/**
+ * @since 0.6.0
+ */
+export interface ConvertHeicToJpegResult {
+  /**
+   * The path of the converted JPEG image.
+   *
+   * @example '/path/to/image.jpeg'
+   * @since 0.6.0
+   */
+  path: string;
 }
 
 export interface PickFilesOptions {

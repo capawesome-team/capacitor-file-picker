@@ -13,6 +13,21 @@ import MobileCoreServices
         self.plugin = plugin
     }
 
+    public func convertHeicToJpeg(_ sourceUrl: URL) throws -> String? {
+        let heicImage = UIImage(named: sourceUrl.path)
+        guard let heicImage = heicImage else {
+            return nil
+        }
+        let jpegImageData = heicImage.jpegData(compressionQuality: 0.9)
+        let filenameWithoutExtension = sourceUrl.deletingPathExtension().lastPathComponent
+        let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(filenameWithoutExtension).jpeg")
+        do {
+            try deleteFile(sourceUrl)
+        }
+        try jpegImageData?.write(to: targetUrl)
+        return targetUrl.absoluteString
+    }
+
     public func openDocumentPicker(multiple: Bool, documentTypes: [String]) {
         DispatchQueue.main.async {
             let documentPicker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .import)
@@ -178,6 +193,23 @@ import MobileCoreServices
             return (width, height)
         default:
             return (height, width)
+        }
+    }
+
+    @objc public func getFileUrlByPath(_ path: String) -> URL? {
+        guard let url = URL.init(string: path) else {
+            return nil
+        }
+        if FileManager.default.fileExists(atPath: url.path) {
+            return url
+        } else {
+            return nil
+        }
+    }
+
+    @objc func deleteFile(_ url: URL) throws {
+        if FileManager.default.fileExists(atPath: url.path) {
+            try FileManager.default.removeItem(atPath: url.path)
         }
     }
 }

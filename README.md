@@ -92,6 +92,7 @@ const appendFileToFormData = async () => {
 
 <docgen-index>
 
+* [`convertHeicToJpeg(...)`](#convertheictojpeg)
 * [`pickFiles(...)`](#pickfiles)
 * [`pickImages(...)`](#pickimages)
 * [`pickMedia(...)`](#pickmedia)
@@ -103,6 +104,27 @@ const appendFileToFormData = async () => {
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### convertHeicToJpeg(...)
+
+```typescript
+convertHeicToJpeg(options: ConvertHeicToJpegOptions) => Promise<ConvertHeicToJpegResult>
+```
+
+Convert a HEIC image to JPEG.
+
+Only available on iOS.
+
+| Param         | Type                                                                          |
+| ------------- | ----------------------------------------------------------------------------- |
+| **`options`** | <code><a href="#convertheictojpegoptions">ConvertHeicToJpegOptions</a></code> |
+
+**Returns:** <code>Promise&lt;<a href="#convertheictojpegresult">ConvertHeicToJpegResult</a>&gt;</code>
+
+**Since:** 0.6.0
+
+--------------------
+
 
 ### pickFiles(...)
 
@@ -191,6 +213,20 @@ Only available on Android and iOS.
 
 
 ### Interfaces
+
+
+#### ConvertHeicToJpegResult
+
+| Prop       | Type                | Description                           | Since |
+| ---------- | ------------------- | ------------------------------------- | ----- |
+| **`path`** | <code>string</code> | The path of the converted JPEG image. | 0.6.0 |
+
+
+#### ConvertHeicToJpegOptions
+
+| Prop       | Type                | Description                 | Since |
+| ---------- | ------------------- | --------------------------- | ----- |
+| **`path`** | <code>string</code> | The path of the HEIC image. | 0.6.0 |
 
 
 #### PickFilesResult

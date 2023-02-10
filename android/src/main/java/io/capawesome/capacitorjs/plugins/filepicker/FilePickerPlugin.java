@@ -32,6 +32,11 @@ public class FilePickerPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void convertHeicToJpeg(PluginCall call) {
+        call.unimplemented("Not implemented on Android.");
+    }
+
+    @PluginMethod
     public void pickFiles(PluginCall call) {
         try {
             JSArray types = call.getArray("types", null);
