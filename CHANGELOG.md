@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.6.0...v0.6.1) (2023-02-12)
+
+
+### Bug Fixes
+
+* **ios:** `convertHeicToJpeg` deleted the source file ([da86d97](https://github.com/capawesome-team/capacitor-file-picker/commit/da86d97c7dca9782387a4bbdc3fe7aa7f79e03e3))
+* **ios:** picked files were renamed ([b55817b](https://github.com/capawesome-team/capacitor-file-picker/commit/b55817b7c025c3b086bea9d049052a351954c80e))
+
 ## [0.6.0](https://github.com/capawesome-team/capacitor-file-picker/compare/v0.5.10...v0.6.0) (2023-02-10)
 
 
