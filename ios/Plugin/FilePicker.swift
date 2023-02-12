@@ -22,7 +22,7 @@ import MobileCoreServices
         let filenameWithoutExtension = sourceUrl.deletingPathExtension().lastPathComponent
         let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(filenameWithoutExtension).jpeg")
         do {
-            try deleteFile(sourceUrl)
+            try deleteFile(targetUrl)
         }
         try jpegImageData?.write(to: targetUrl)
         return targetUrl.absoluteString
