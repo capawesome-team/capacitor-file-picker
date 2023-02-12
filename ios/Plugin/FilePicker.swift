@@ -178,8 +178,10 @@ import MobileCoreServices
     }
 
     private func saveTemporaryFile(_ sourceUrl: URL) throws -> URL {
-        let timestamp = Int(NSDate().timeIntervalSince1970)
-        let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(timestamp)_\(sourceUrl.lastPathComponent)")
+        let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(sourceUrl.lastPathComponent)
+        do {
+            try deleteFile(targetUrl)
+        }
         try FileManager.default.copyItem(at: sourceUrl, to: targetUrl)
         return targetUrl
     }
