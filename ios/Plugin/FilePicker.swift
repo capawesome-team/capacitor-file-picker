@@ -178,7 +178,11 @@ import MobileCoreServices
     }
 
     private func saveTemporaryFile(_ sourceUrl: URL) throws -> URL {
-        let targetUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(sourceUrl.lastPathComponent)
+        var directory = URL(fileURLWithPath: NSTemporaryDirectory())
+        if let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+            directory = cachesDirectory
+        }
+        let targetUrl = directory.appendingPathComponent(sourceUrl.lastPathComponent)
         do {
             try deleteFile(targetUrl)
         }
