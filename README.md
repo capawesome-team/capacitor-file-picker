@@ -1,3 +1,9 @@
+## ⚠️ Deprecated repository
+
+**This project has been moved to the following monorepo: [capawesome-team/capacitor-plugins](https://github.com/capawesome-team/capacitor-plugins).**
+
+-----
+
 <p align="center"><br><img src="https://avatars.githubusercontent.com/u/105555861" width="128" height="128" /></p>
 <h3 align="center">File Picker</h3>
 <p align="center"><strong><code>@capawesome/capacitor-file-picker</code></strong></p>
