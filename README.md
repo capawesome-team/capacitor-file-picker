@@ -297,11 +297,12 @@ Remove all listeners for this plugin.
 
 #### PickFilesOptions
 
-| Prop           | Type                  | Description                                                                                                                                                                                                                       | Default            |
-| -------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| **`types`**    | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. |                    |
-| **`multiple`** | <code>boolean</code>  | Whether multiple files may be selected.                                                                                                                                                                                           | <code>false</code> |
-| **`readData`** | <code>boolean</code>  | Whether to read the file data.                                                                                                                                                                                                    | <code>false</code> |
+| Prop                   | Type                  | Description                                                                                                                                                                                                                       | Default            |
+| ---------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| **`types`**            | <code>string[]</code> | List of accepted file types. Look at [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml) for a complete list of standard media types. This option cannot be used with `multiple: true` on Android. |                    |
+| **`customExtensions`** | <code>string[]</code> | iOS only. List of custom file name extensions (without leading dot '.'). Necessary in iOS since custom mimetypes are not supported. Example: `['cs2']`                                                                            |                    |
+| **`multiple`**         | <code>boolean</code>  | Whether multiple files may be selected.                                                                                                                                                                                           | <code>false</code> |
+| **`readData`**         | <code>boolean</code>  | Whether to read the file data.                                                                                                                                                                                                    | <code>false</code> |
 
 
 #### PickMediaOptions
